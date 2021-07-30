@@ -9,6 +9,7 @@ Malgorzata D Gonciarz <gonciarz_malgorzata_donata@lilly.com>
 # License
 MIT + file 
 # Repository
+https://github.com/EliLillyCo/surfaltR
 # Purpose
 Surface proteins are hydrophobic and remain difficult to study thereby necessitating the use of TM topology prediction methods such as TMHMM and Phobius. However, there exists a need for bioinformatic approaches to streamline batch processing of isoforms for comparing and visualizing topologies. To address this gap, we have developed an R package, SurfaltR. 
 # Implementation
