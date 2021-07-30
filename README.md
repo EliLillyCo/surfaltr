@@ -19,7 +19,7 @@ In the code above, be sure to replace the URL shown in the quotation marks with 
 As run_phobius() relies on the Phobius API, a copy of the software does not need to be downloaded on the user’s device. However, in order to ensure that sequences can be adequately processed in the R development environment, the “ragp” package needs to be installed. To install this package, the following code can be used:
 devtools::install_github("missuse/ragp")
   
-# Please refer to the vignette for detailed descriptions of wrokflow and functions.
+# Please refer to the vignette for detailed descriptions of workflow and functions.
 
 
 # References
