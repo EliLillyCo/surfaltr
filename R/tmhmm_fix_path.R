@@ -5,7 +5,7 @@
 #' In order to set a standard path that allows tmhmm to run, the path
 #' is set to match that of the fasta file contining the amino acids.
 #'
-#' @usage tmhmm_fix_path(fasta_filename, folder_name = tmhmm::get_default_tmhmm_folder())
+#' @usage tmhmm_fix_path(fasta_filename, folder_name = get_default_tmhmm_folder())
 #' @param fasta_filename Parameter containing input fasta file to be run on
 #' tmhmm
 #' @param folder_name Path to folder containing installed tmhmm software
