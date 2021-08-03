@@ -44,7 +44,7 @@ Imports:
 	httr (>= 1.4.2), 
 	testthat(>= 3.0.0)
 Remotes: 
-  missuse/ragp
+  missuse/ragp,
   richelbilderbeek/tmhmm
 RoxygenNote: 7.1.1
 Suggests: 
