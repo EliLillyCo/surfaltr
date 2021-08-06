@@ -1,0 +1,18 @@
+# OSS Project Title
+SurfaltR: An R package for benchmarking alternatively spliced surface protein isoforms by rapid prediction and visualization of TM topologies
+# Contributors
+Aditi Merchant <merchant_aditi@lilly.com> <aditi.merchant@utexas.edu>
+Pooja Gangras <gangras_pooja@lilly.com>
+# Local Business Area
+Jibo Wang <Wang_Jibo@lilly.com>
+Malgorzata D Gonciarz <gonciarz_malgorzata_donata@lilly.com>
+# License
+MIT + file 
+# Repository
+https://github.com/EliLillyCo/surfaltR
+# Purpose
+Surface proteins are hydrophobic and remain difficult to study thereby necessitating the use of TM topology prediction methods such as TMHMM and Phobius. However, there exists a need for bioinformatic approaches to streamline batch processing of isoforms for comparing and visualizing topologies. To address this gap, we have developed an R package, SurfaltR. 
+# Implementation
+SurfaltR pairs inputted isoforms, either known alternatively spliced or novel, with their APPRIS annotated principal counterparts, predicts their TM topologies using TMHMM or Phobius, and generates a customizable graphical output. Further, SurfaltR facilitates the prioritization of biologically diverse isoform pairs through the incorporation of three different ranking metrics and through protein alignment functions. 
+# Development
+The intention is a one-time release on Github and then CRAN however the package maybe updated on Github/CRAN in case its functionality is for some reason affected in the future. Pooja Gangras, Zhen Huang <huang_zhen@network.lilly.com> and Aditi Merchant will contribute to the maintainence of the package. We will ensure the quality and correctness of the project by using the devtools::check() function in R as well as surfaltR::test_surfaltr() built-in self check function. All the checks are currently intended to be manual. External contributions, if received, will be reviewed by the primary contributers to assess significance and necessity, checked using the functions listed above to make sure they do not affect the functionality of the package and then merged. 

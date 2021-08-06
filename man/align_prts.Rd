@@ -36,6 +36,6 @@ aligned sequences to the working directory under a file labeled with the
 gene name.
 }
 \examples{
-align_prts(c("Crb1", "Adgrl1"), system.file("extdata", "CRB1.csv",
+align_prts(c("Crb1"), system.file("extdata", "crb1_example.csv",
 package = "surfaltr"), TRUE, "mouse", TRUE)
 }

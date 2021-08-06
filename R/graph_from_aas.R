@@ -12,7 +12,8 @@
 #' principal or alternative isoform.
 #'
 #' @usage graph_from_aas(data_file, organism = "human", rank = "length",
-#' n_prts = 20, mode = "phobius", size_txt = 2, space_left = -400, temp = FALSE)
+#' n_prts = 20, mode = "phobius", size_txt = 2, space_left = -400, temp = FALSE,
+#' tmhmm_folder_name = NULL)
 #' @param data_file Path to the input file
 #' @param organism String indicating if the transcripts are from a human or
 #' a mouse
@@ -28,13 +29,16 @@
 #' extend.
 #' @param temp Boolean indicating if the fasta file should be deleted after the
 #' function finishes running or not. Recommended to always be set to FALSE.
+#' @param tmhmm_folder_name Full path to folder containing installed TMHMM 2.0
+#' software. This value should end in TMHMM2.0c and needs to be provided if
+#' the mode used is TMHMM.
 #' @return A ggplot figure showing the protein locations for each part of the
 #' surface protein for each alternative and primary transcripts.
-#' @examples graph_from_aas(system.file("extdata", "CRB1.csv", package = "surfaltr"),
-#' "mouse", "combo", 10, "phobius", 2, -400, TRUE)
+#' @examples graph_from_aas(system.file("extdata", "crb1_example.csv", package = "surfaltr"),
+#' "mouse", "combo", 1, "phobius", 4, -300, TRUE)
 #' @export
 
-graph_from_aas <- function(data_file, organism = "human", rank = "length", n_prts = 20, mode = "phobius", size_txt = 2, space_left = -400, temp = FALSE){
+graph_from_aas <- function(data_file, organism = "human", rank = "length", n_prts = 20, mode = "phobius", size_txt = 2, space_left = -400, temp = FALSE, tmhmm_folder_name = NULL){
   old <- getwd()
   if_aa <- TRUE
   final_trans <- clean_data(data_file, if_aa, organism)
@@ -45,7 +49,7 @@ graph_from_aas <- function(data_file, organism = "human", rank = "length", n_prt
     topo <- run_phobius(AA_seq, paste(getwd(), "/AA.fasta", sep = ""))
   }
   if(mode == "tmhmm"){
-    topo <- get_tmhmm("AA.fasta")
+    topo <- get_tmhmm("AA.fasta", tmhmm_folder_name)
   }
   counts <- process_tmhmm(topo, AA_seq)
   p <- graph_prots(counts, rank, n_prts, size_txt, space_left)

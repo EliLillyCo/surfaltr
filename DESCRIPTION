@@ -33,7 +33,6 @@ Imports:
 	biomaRt (>= 2.48.0),
 	protr (>= 1.6-2),
 	seqinr (>= 4.2-5),
-	tmhmm (>= 1.3),
 	ggplot2 (>= 3.3.2),
 	utils (>= 2.10.1),
 	stringr (>= 1.4.0), 
@@ -43,7 +42,8 @@ Imports:
 	readr (>= 1.4.0),
 	httr (>= 1.4.2), 
 	testthat(>= 3.0.0)
-Remotes: missuse/ragp
+Remotes: 
+  missuse/ragp
 RoxygenNote: 7.1.1
 Suggests: 
     knitr,
