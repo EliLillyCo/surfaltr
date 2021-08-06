@@ -22,7 +22,7 @@
 #' @import msa
 #' @importFrom seqinr write.fasta
 #' @importFrom Biostrings readAAStringSet
-#' @examples align_prts(c("Crb1", "Adgrl1"), system.file("extdata", "CRB1.csv",
+#' @examples align_prts(c("Crb1"), system.file("extdata", "crb1_example.csv",
 #' package = "surfaltr"), TRUE, "mouse", TRUE)
 #' @export
 

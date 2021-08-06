@@ -27,9 +27,9 @@
 #' @importFrom Biostrings readAAStringSet
 #' @export
 #' @examples
-#' align_org_prts(c("IGSF1", "TAPBP"),
-#' system.file("extdata", "hpa_genes.csv", package = "surfaltr"),
-#' system.file("extdata", "hpa_mouse_genes.csv", package = "surfaltr"),
+#' align_org_prts(c("IGSF1"),
+#' system.file("extdata", "hpa_example.csv", package = "surfaltr"),
+#' system.file("extdata", "hpa_mouse_example.csv", package = "surfaltr"),
 #' FALSE, TRUE)
 
 align_org_prts <- function(gene_names, hs_data_file, mm_data_file, if_aa = FALSE, temp = FALSE){

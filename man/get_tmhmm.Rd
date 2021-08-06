@@ -5,11 +5,14 @@
 \title{Create a data frame with the membrane locations of each amino acid in a
 protein using TMHMM}
 \usage{
-get_tmhmm(fasta_file_name)
+get_tmhmm(fasta_file_name, tmhmm_folder_name)
 }
 \arguments{
 \item{fasta_file_name}{Name of .fasta file containing amino acid
 sequences}
+
+\item{tmhmm_folder_name}{Full path to folder containing installed TMHMM 2.0
+software. This path should end in TMHMM2.0c}
 }
 \value{
 A data frame containing each transcript ID and the corresponding
@@ -31,8 +34,11 @@ directory.
 }
 \examples{
 \donttest{
-AA_seq <- get_pairs(system.file("extdata", "CRB1.csv",
-package = "surfaltr"), TRUE, "mouse", TRUE)
-topo <- get_tmhmm("AA.fasta")
+tmhmm_folder_name <- "~/TMHMM2.0c"
+if(check_tmhmm_install(tmhmm_folder_name)){
+  AA_seq <- get_pairs(system.file("extdata", "crb1_example.csv",
+  package = "surfaltr"), TRUE, "mouse", TRUE)
+  topo <- get_tmhmm("AA.fasta", tmhmm_folder_name)
+}
 }
 }

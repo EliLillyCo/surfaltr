@@ -6,7 +6,8 @@
 based on user provided amino acid sequences}
 \usage{
 graph_from_aas(data_file, organism = "human", rank = "length",
-n_prts = 20, mode = "phobius", size_txt = 2, space_left = -400, temp = FALSE)
+n_prts = 20, mode = "phobius", size_txt = 2, space_left = -400, temp = FALSE,
+tmhmm_folder_name = NULL)
 }
 \arguments{
 \item{data_file}{Path to the input file}
@@ -31,6 +32,10 @@ extend.}
 
 \item{temp}{Boolean indicating if the fasta file should be deleted after the
 function finishes running or not. Recommended to always be set to FALSE.}
+
+\item{tmhmm_folder_name}{Full path to folder containing installed TMHMM 2.0
+software. This value should end in TMHMM2.0c and needs to be provided if
+the mode used is TMHMM.}
 }
 \value{
 A ggplot figure showing the protein locations for each part of the
@@ -48,6 +53,6 @@ amino acids. Each fill color corresponds to a membrane location and either
 principal or alternative isoform.
 }
 \examples{
-graph_from_aas(system.file("extdata", "CRB1.csv", package = "surfaltr"),
-"mouse", "combo", 10, "phobius", 2, -400, TRUE)
+graph_from_aas(system.file("extdata", "crb1_example.csv", package = "surfaltr"),
+"mouse", "combo", 1, "phobius", 4, -300, TRUE)
 }

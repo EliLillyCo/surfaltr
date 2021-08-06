@@ -1,0 +1,10 @@
+Input Variable,Description,Parameters,Default,Example,Recommended Values
+data_file,Path/to/input .csv file ,String containing path,N/A,"""~/gene _id_data.csv""",N/A
+organism,Organism from gene information is derived from,"“mouse”, “human”",“human”,"""mouse""",N/A
+rank,Method to rank which isoform pairs are most significant,"“combo”, “length”, “TM”",“length”,"""combo""",N/A
+n_prts,Number of genes to display isoforms from ,Integer ,20,15,5 to 25
+mode,TM topology prediction model to use,"“phobius”, “tmhmm”",“phobius”,"""tmhmm""",N/A
+size_txt,Size of text of transcript labels on resultant plot,Double,2,3,0.5 to 4
+space_left,Amount of space in graph left of start of topology bars for transcript labels,Double,-400,-150,-100 to -500
+temp,States whether output files should be deleted after run,Boolean,FALSE,FALSE,FALSE
+tmhmm_folder_name,Path/to/TMHMM 2.0/folder,String containing path,NULL,"""~/TMHMM2.0c""","Path if mode is TMHMM, Null if mode is Phobius"

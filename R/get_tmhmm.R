@@ -6,9 +6,11 @@
 #' for each amino acid, with O and o representing extracellular, M representing
 #' transmembrane, and i representing intracellular.
 #'
-#' @usage get_tmhmm(fasta_file_name)
+#' @usage get_tmhmm(fasta_file_name, tmhmm_folder_name)
 #' @param fasta_file_name Name of .fasta file containing amino acid
 #' sequences
+#' @param tmhmm_folder_name Full path to folder containing installed TMHMM 2.0
+#' software. This path should end in TMHMM2.0c
 #' @return A data frame containing each transcript ID and the corresponding
 #' membrane location for each amino acid in its sequence formatted as a string
 #' @note In order for this function to work, there needs to be a .fasta file
@@ -18,22 +20,24 @@
 #' returned data frame in csv format to the output folder in the working
 #' directory.
 #' @importFrom utils write.csv
-#' @importFrom tmhmm get_default_tmhmm_folder
-#' @importFrom utils assignInNamespace
 #' @examples
 #' \donttest{
-#' AA_seq <- get_pairs(system.file("extdata", "CRB1.csv",
-#' package = "surfaltr"), TRUE, "mouse", TRUE)
-#' topo <- get_tmhmm("AA.fasta")
+#' tmhmm_folder_name <- "~/TMHMM2.0c"
+#' if(check_tmhmm_install(tmhmm_folder_name)){
+#'   AA_seq <- get_pairs(system.file("extdata", "crb1_example.csv",
+#'   package = "surfaltr"), TRUE, "mouse", TRUE)
+#'   topo <- get_tmhmm("AA.fasta", tmhmm_folder_name)
+#' }
 #' }
 #' @export
 
 
 
-get_tmhmm <- function(fasta_file_name){
-  #tmhmm_fix_path(fasta_file_name,  folder_name = tmhmm::get_default_tmhmm_folder())
-  #assignInNamespace("run_tmhmm",run_tmhmm,ns="tmhmm")
-  topo_fasta <- tmhmm_fix_path(fasta_file_name, folder_name = tmhmm::get_default_tmhmm_folder())
+get_tmhmm <- function(fasta_file_name, tmhmm_folder_name){
+  if(!(check_tmhmm_install(tmhmm_folder_name))){
+    stop("Please check your TMHMM installation and the provided path.")
+  }
+  topo_fasta <- tmhmm_fix_path(fasta_file_name, tmhmm_folder_name)
   topo_fasta <- data.frame(topo_fasta)
   topo <- data.frame("Transcript_ID" = character(0),"Output" = character(0))
   id_val <- 0

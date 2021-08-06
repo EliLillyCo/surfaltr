@@ -4,7 +4,7 @@
 \alias{tmhmm_fix_path}
 \title{Retrieve Data from TMHMM and Fix Functionality of TMHMM R Package}
 \usage{
-tmhmm_fix_path(fasta_filename, folder_name = tmhmm::get_default_tmhmm_folder())
+tmhmm_fix_path(fasta_filename, folder_name)
 }
 \arguments{
 \item{fasta_filename}{Parameter containing input fasta file to be run on

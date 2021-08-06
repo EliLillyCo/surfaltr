@@ -30,8 +30,10 @@
 #' @importFrom utils "write.csv"
 #' @examples
 #' \donttest{
-#' AA_seq <- get_pairs(system.file("extdata", "CRB1.csv",
+#' currwd <- getwd()
+#' AA_seq <- get_pairs(system.file("extdata", "crb1_example.csv",
 #' package = "surfaltr"), TRUE, "mouse", TRUE)
+#' setwd(currwd)
 #' }
 #' @export
 
