@@ -8,7 +8,7 @@ output:
     theme: paper
     anchor_sections: FALSE
 bibliography: surfaltrbib.bib
-csl: /home/l014011/nature-no-et-al.csl
+csl: nature-no-et-al.csl
 nocite: '@*'
 ---
 
@@ -205,8 +205,8 @@ AA_seq <- get_pairs(data_file = "~/CRB1.csv", if_aa = TRUE, organism = "mouse", 
 Below is a table depicting the table output from the get_pairs function applied 
 to the Ray et al. [@ray_comprehensive_2020] dataset:
 
-```{r, echo = FALSE, eval = FALSE}
-AA_seq <- get_pairs("/home/l014011/CRB1.csv", TRUE, "mouse")
+```{r, echo = FALSE}
+AA_seq <- get_pairs("~/CRB1.csv", TRUE, "mouse")
 AA_seq <-  data.frame(lapply(AA_seq, substr, 1, 30))
 for(row in 1:nrow(AA_seq)){
   AA_seq[row, "protein_sequence"] <- paste(AA_seq[row, "protein_sequence"], "...", sep = "")
@@ -316,7 +316,7 @@ _TM Difference = Alt TM - Prnc TM_
 In this situation, a positive TM difference is ranked higher than a negative or zero TM difference as this indicates that the alternative isoform has gained a TM domain and therefore may have a novel extracellular domain and/or function. For any difference below 0, isoform pairs will be ranked so that alternatively/mis-spliced transcripts that have more TM domains lost will be ranked higher than those that have lost only a few domains. To contextualize this ranking system, the following table can be used as an example:
 
 ```{r, echo = FALSE}
-tm_rank <- read.csv(file = "/home/l014011/TM_Table.csv", header = TRUE, fileEncoding="latin1")
+tm_rank <- read.csv(file = "TM_Table.csv", header = TRUE, fileEncoding="latin1")
 kable(tm_rank, align = 'c')%>%
   kable_styling(full_width = F)
 ```
@@ -329,7 +329,7 @@ In this situation, isoforms that have a high difference in both length and numbe
 To contextualize this ranking system, the following table can be used as an example:
 
 ```{r, echo = FALSE}
-cm_rank <- read.csv(file = "/home/l014011/Combo_Table.csv", header = TRUE, fileEncoding="latin1")
+cm_rank <- read.csv(file = "Combo_Table.csv", header = TRUE, fileEncoding="latin1")
 kable(cm_rank, align = 'c')%>%
   kable_styling(full_width = F)
 ```
@@ -348,7 +348,7 @@ Figure 3: Comparison of Length, TM, and Combo Ranking Metrics for Uhlén et al. 
 In addition to ranking the proteins, the plot_isoforms() function can also choose how many proteins to display. Depending on the number supplied to the n_prts input parameter, the user can choose the number of top-ranked pairs to display on the plot. Generally, it is recommended to limit the number of isoform pairs displayed in the plot to under 30 as otherwise the plot can appear cluttered. However, if the user wants to view all isoforms on the same plot, they simply have to enter the total number of genes they entered into the n_prts parameter. As the number of isoform pairs displayed gets larger, the size_txt parameter should be reduced and the space_left parameter should be increased to accommodate more isoform plots. Similarly, if only a few isoforms are plotted, the size_txt parameter should be increased and the space_left parameter decreased. The following table provides helpful guidelines for size parameters that can be used for different values of n_prts:
 
 ```{r, echo = FALSE}
-ft_rank <- read.csv(file = "/home/l014011/Format_Table.csv", header = TRUE, fileEncoding="latin1")
+ft_rank <- read.csv(file = "Format_Table.csv", header = TRUE, fileEncoding="latin1")
 kable(ft_rank, align = 'c')%>%
   kable_styling(full_width = T)
 ```
