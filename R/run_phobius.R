@@ -20,7 +20,6 @@
 #' returned data frame in csv format to the working directory.
 #' @importFrom utils write.csv
 #' @importFrom stringr str_split
-#' @importFrom ragp get_phobius
 #' @importFrom readr parse_number
 #' @examples
 #' \donttest{
@@ -34,7 +33,7 @@
 
 
 run_phobius <- function(AA_seq, fasta_file_name){
-  phobius <- ragp::get_phobius(fasta_file_name)
+  phobius <- get_phobius(fasta_file_name)
   topo <- data.frame("Transcript_ID" = character(nrow(phobius)),
                      "Output" = character(nrow(phobius)))
   topo$Transcript_ID <- phobius$Name

@@ -50,7 +50,7 @@ install.packages("devtools")
 library(devtools)
 ```
 
-Once remotes is installed, surfaltR can be installed using the following code:
+Once devtools is installed, surfaltR can be installed using the following code:
 ```{r, eval = FALSE}
 devtools::install_github("EliLillyCo/surfaltR")
 ```
@@ -67,10 +67,7 @@ package can be found at https://github.com/EliLillyCo/surfaltR.
 In order to be able to use TMHMM R package [@krogh_predicting_2001] within surfaltR to predict membrane topology, it is important to first ensure that you have TMHMM 2.0 standalone software installed on your computer. To do this, simply navigate to https://services.healthtech.dtu.dk/service.php?TMHMM-2.0, and follow directions for installation of standalone software. Make sure to record the path to which TMHMM 2.0 is installed, as this information will be needed in order to run TMHMM in future functions.
 
 #### __Phobius Installation__
-As run_phobius() relies on the Phobius API, a copy of the software does not need to be downloaded on the user’s device. However, in order to ensure that sequences can be adequately processed in the R development environment, the “ragp” package needs to be installed. To install this package, the following code can be used:
-```{r,  message = FALSE, results = 'hide', eval=FALSE}
-devtools::install_github("missuse/ragp")
-```
+As run_phobius() relies on the Phobius API, a copy of the software does not need to be downloaded on the user’s device and will isntead automatically be called by the surfaltR functions.
 
 <a id="qs"></a>
 
