@@ -1,10 +1,10 @@
 ---
-title: "Rapid comparison of surface protein isoform membrane topologies through SurfaltR"
+title: "Rapid Comparison of Surface Protein Isoform Membrane Topologies Through surfaltR"
 output:
   html_document:
-    toc: true
+    toc: TRUE
     toc_depth: 6
-    toc_float: true
+    toc_float: TRUE
     theme: paper
     anchor_sections: FALSE
 bibliography: surfaltrbib.bib
@@ -37,31 +37,17 @@ vignette: >
 ## __Abstract__
 Cell surface proteins are of great biomedical relevance, serving as cell type differentiators and indicators of disease states [@juliano_integrin_2011]. Consequently, proteins on the plasma membrane form a major fraction of the druggable proteome and are also used to target novel therapeutic modalities to specific cells [@juliano_integrin_2011]. Alternatively spliced surface protein isoforms have been shown to differ based on their localization within cells and their transmembrane (TM) topology [@juliano_integrin_2011; @noauthor_frontiers_nodate]. Thus, in depth analysis of cell surface protein isoforms can not only expand the diversity of the druggable proteome but also aid in differentiating delivery between closely related cell types. The transcriptomic and proteomic approaches available today make it possible to identify several novel alternatively spliced isoforms [@zhao_integrin-targeting_2020]. However, there exists a need for bioinformatic approaches to streamline batch processing of isoforms to predict and visualize their TM topologies. To address this gap, we have developed an R package, SurfaltR, which matches inputted novel or alternative isoforms to their annotated principal counterparts, rapidly predicts their TM topologies, and generates a user-friendly graphical output. Further, SurfaltR facilitates the prioritization of biologically diverse isoform pairs through the incorporation of three different ranking metrics in the graphical output and through several protein alignment functions. This vignette explains how the package can be used and demonstrates two different workflows starting from either Ensembl transcript ID’s or amino acid sequence inputs.
 
-## __Overall Workflow of SurfaltR__
-Note: If you use surfaltR in published research, please cite:
-<write publication or github page>
-
 ## __Installation__ 
 #### __SurfaltR Installation__
-As surfaltR is hosted on Github, the devtools package is needed to successfully
-install surfaltR. To install and load devtools, the following code can be used:
-```{r, eval = FALSE}
-install.packages("devtools")
-library(devtools)
-```
-
-Once devtools is installed, surfaltR can be installed using the following code:
+SurfaltR is freely available for download via Github. To install and load surfaltR, the following code can be used:
 ```{r, eval = FALSE}
 devtools::install_github("EliLillyCo/surfaltR")
 ```
-
 To load surfaltR, the following code can be used:
 ```{r, eval = FALSE}
 library(surfaltr)
 ```
 
-The github repository for surfaltR containing all information related to the 
-package can be found at https://github.com/EliLillyCo/surfaltR.
 
 #### __TMHMM Standalone Software Installation__
 In order to be able to use TMHMM R package [@krogh_predicting_2001] within surfaltR to predict membrane topology, it is important to first ensure that you have TMHMM 2.0 standalone software installed on your computer. To do this, simply navigate to https://services.healthtech.dtu.dk/service.php?TMHMM-2.0, and follow directions for installation of standalone software. Make sure to record the path to which TMHMM 2.0 is installed, as this information will be needed in order to run TMHMM in future functions.
@@ -94,7 +80,7 @@ graph_from_ids(data_file = "~/hpa_genes.csv", organism = "human",
 ```
 
 ## __How to get help for surfaltR__
-All questions can be posted on the [Github page](https://github.com/EliLillyCo/surfaltR) where the package is being hosted. Opening a Github issue is the fastest way to reach us.
+All questions can be emailed to the maintainer at gangras_pooja@lilly.com.
 
 ## __Input data__
 As mentioned above, surfaltR is able to process two different forms of inputs: transcript IDs and amino acid sequences. This enables surfaltR to process novel transcripts in addition to transcripts already documented on Ensembl and annotated by APPRIS. 
@@ -117,7 +103,7 @@ required for surfaltR to be able to process ID-based input data.
 ```{r, echo = FALSE}
 all_genome_data <- read.csv(file = "hpa_genes.csv", header = TRUE)
 kable(head(all_genome_data), align = 'c')%>%
-  kable_styling(full_width = T)
+  kable_styling(full_width = TRUE)
 ```
 
 <a id="exaa"></a>
@@ -135,14 +121,14 @@ for(row in 1:nrow(all_genome_data)){
   all_genome_data[row, "protein_sequence"] <- paste(all_genome_data[row, "protein_sequence"], "...", sep = "")
 }
 kable(head(all_genome_data), align = 'c')%>%
-  kable_styling(full_width = T)
+  kable_styling(full_width = TRUE)
 ```
 
 ## __About the example datasets__
-The example datasets have been derived from two different sources and saved in the data/ folder within the package installation and in the data/ folder on the SurfaltR package repository on Github (link). 
+The example datasets have been derived from two different sources and saved in the data/ folder within the package installation and in the data/ folder on the SurfaltR package.
 
-1.	For the transcript ID input, we have included 10 unique transcripts from 7 different genes annotated as alternative by APPRIS. These genes were derived from supplementary data 12 from Uhlén et al. [@uhlen_proteomics_2015]. This data has been formatted to be compatible with the package as described [above](#exid).
-2.	For the amino acid input, we have utilized the supplementary data 1 from Ray et al. [@ray_comprehensive_2020]. This data includes novel isoforms expressed in mouse retina identified by long read sequencing and further validated by cell surface proteomics approaches. The data has been formatted to be compatible with the package as described [above](#exaa).
+1.  For the transcript ID input, we have included 10 unique transcripts from 7 different genes annotated as alternative by APPRIS. These genes were derived from supplementary data 12 from Uhlén et al. [@uhlen_proteomics_2015]. This data has been formatted to be compatible with the package as described [above](#exid).
+2.  For the amino acid input, we have utilized the supplementary data 1 from Ray et al. [@ray_comprehensive_2020]. This data includes novel isoforms expressed in mouse retina identified by long read sequencing and further validated by cell surface proteomics approaches. The data has been formatted to be compatible with the package as described [above](#exaa).
 
 <a id="Rapid_Plotting_of_Paired_Isoforms"></a>
 
@@ -159,7 +145,7 @@ When a .csv file containing known [Ensemble transcript IDs and gene names](#exid
 ```{r, echo = FALSE}
 inp <- read.csv(file = "Input_Table.csv", header = TRUE, fileEncoding="latin1")
 kable(inp, align = 'c')%>%
-  kable_styling(full_width = T)
+  kable_styling(full_width = TRUE)
 ```
 
 An example of the code required to run this function applied to the Uhlén et al. [@uhlen_proteomics_2015]. data is shown below:
@@ -202,15 +188,10 @@ AA_seq <- get_pairs(data_file = "~/CRB1.csv", if_aa = TRUE, organism = "mouse", 
 Below is a table depicting the table output from the get_pairs function applied 
 to the Ray et al. [@ray_comprehensive_2020] dataset:
 
-```{r, echo = FALSE}
-AA_seq <- get_pairs("~/CRB1.csv", TRUE, "mouse")
-AA_seq <-  data.frame(lapply(AA_seq, substr, 1, 30))
-for(row in 1:nrow(AA_seq)){
-  AA_seq[row, "protein_sequence"] <- paste(AA_seq[row, "protein_sequence"], "...", sep = "")
-}
-kable(head(AA_seq), align = 'c')%>%
-  kable_styling(full_width = T)
+```{r, echo = FALSE, out.width = "200%", fig.align = "center"}
+knitr::include_graphics("crb1_output.PNG")
 ```
+
 
 ##### __Output 2: FASTA File__ 
 Below is a snippet of the FASTA file produced from this function when applied
@@ -315,7 +296,7 @@ In this situation, a positive TM difference is ranked higher than a negative or 
 ```{r, echo = FALSE}
 tm_rank <- read.csv(file = "TM_Table.csv", header = TRUE, fileEncoding="latin1")
 kable(tm_rank, align = 'c')%>%
-  kable_styling(full_width = F)
+  kable_styling(full_width = FALSE)
 ```
 
 ##### __Ranked by Combo Metric__
@@ -328,7 +309,7 @@ To contextualize this ranking system, the following table can be used as an exam
 ```{r, echo = FALSE}
 cm_rank <- read.csv(file = "Combo_Table.csv", header = TRUE, fileEncoding="latin1")
 kable(cm_rank, align = 'c')%>%
-  kable_styling(full_width = F)
+  kable_styling(full_width = FALSE)
 ```
 
 An example of how the different ranking systems change the appearance of the plots is shown below:
@@ -347,7 +328,7 @@ In addition to ranking the proteins, the plot_isoforms() function can also choos
 ```{r, echo = FALSE}
 ft_rank <- read.csv(file = "Format_Table.csv", header = TRUE, fileEncoding="latin1")
 kable(ft_rank, align = 'c')%>%
-  kable_styling(full_width = T)
+  kable_styling(full_width = TRUE)
 ```
 
 #### __Plot Interpretation__

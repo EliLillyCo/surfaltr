@@ -2,8 +2,8 @@
 #'
 #' This function checks to make sure that TMHMM is installed correctly
 #' at the file path specified by the user. If TMHMM is not installed correctly,
-#' then the function will output an error message telling the user to check their
-#' installation.
+#' then the function will output an error message telling the user to check 
+#' their installation.
 #'
 #' @usage check_tmhmm_install(tmhmm_folder_name)
 #' @param tmhmm_folder_name Full path to folder containing installed TMHMM 2.0
@@ -15,20 +15,19 @@
 #' @importFrom utils write.csv
 #' @importFrom utils assignInNamespace
 #' @examples
-#' \donttest{
 #' tmhmm_folder_name <- "~/TMHMM2.0c"
 #' install_correct <- check_tmhmm_install(tmhmm_folder_name)
-#' }
 #' @export
 
-check_tmhmm_install <- function(tmhmm_folder_name){
-  final_path <- paste(tmhmm_folder_name, "/bin/tmhmm", sep = "")
-  if(!(file.exists(final_path))){
-    print("Please check and make sure that TMHMM 2.0 is installed at the file path specified. To install TMHMM, please go to https://services.healthtech.dtu.dk/service.php?TMHMM-2.0 and follow the instructions.")
-    return(FALSE)
-  }else{
-    return(TRUE)
-  }
+check_tmhmm_install <- function(tmhmm_folder_name) {
+    final_path <- paste(tmhmm_folder_name, "/bin/tmhmm", sep = "")
+    if (!(file.exists(final_path))) {
+        print("Please check and make sure that TMHMM 2.0 is installed at the 
+              file path specified. To install TMHMM, please go to 
+              https://services.healthtech.dtu.dk/service.php?TMHMM-2.0 and 
+              follow the instructions.")
+        return(FALSE)
+    } else {
+        return(TRUE)
+    }
 }
-
-

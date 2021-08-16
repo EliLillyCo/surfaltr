@@ -32,11 +32,13 @@ saved to the working directory. Additionally, the file saves a copy of the
 returned data frame in csv format to the working directory.
 }
 \examples{
-\donttest{
-currwd <- getwd()
-AA_seq <- get_pairs(system.file("extdata", "crb1_example.csv",
-package = "surfaltr"), TRUE, "mouse", TRUE)
-topo <- run_phobius(AA_seq, paste(getwd(), "/AA.fasta", sep = ""))
-setwd(currwd)
+tmhmm_folder_name <- "~/TMHMM2.0c"
+if (check_tmhmm_install(tmhmm_folder_name)) {
+    currwd <- getwd()
+    AA_seq <- get_pairs(system.file("extdata", "crb1_example.csv",
+        package = "surfaltr"
+    ), TRUE, "mouse", TRUE)
+    topo <- run_phobius(AA_seq, paste(getwd(), "/AA.fasta", sep = ""))
+    setwd(currwd)
 }
 }

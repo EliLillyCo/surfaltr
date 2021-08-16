@@ -34,26 +34,34 @@
 #' the mode used is TMHMM.
 #' @return A ggplot figure showing the protein locations for each part of the
 #' surface protein for each alternative and primary transcripts.
-#' @examples graph_from_ids(system.file("extdata", "hpa_example.csv", package = "surfaltr"),
-#' "human", "length", 1, "phobius", 5, -300, TRUE)
+#' @examples
+#' tmhmm_folder_name <- "~/TMHMM2.0c"
+#' if (check_tmhmm_install(tmhmm_folder_name)) {
+#'     graph_from_ids(
+#'         system.file("extdata", "hpa_example.csv", package = "surfaltr"),
+#'         "human", "length", 1, "tmhmm", 5, -300, TRUE
+#'     )
+#' }
 #' @export
 
-graph_from_ids <- function(data_file, organism = "human", rank = "length", n_prts = 20, mode = "phobius", size_txt = 2, space_left = -400, temp = FALSE, tmhmm_folder_name = NULL){
-  old <- getwd()
-  if_aa <- FALSE
-  final_trans <- clean_data(data_file, if_aa, organism)
-  princ <- ensembl_db_retrieval(organism)
-  final_pairs <- merge_trans(princ, final_trans, if_aa)
-  aa_trans <- format_ids(final_pairs)
-  AA_seq <- get_prts(aa_trans, temp)
-  if(mode == "phobius"){
-    topo <- run_phobius(AA_seq, paste(getwd(), "/AA.fasta", sep = ""))
-  }
-  if(mode == "tmhmm"){
-    topo <- get_tmhmm("AA.fasta", tmhmm_folder_name)
-  }
-  counts <- process_tmhmm(topo, AA_seq)
-  p <- graph_prots(counts, rank, n_prts, size_txt, space_left)
-  setwd(old)
-  p
+graph_from_ids <- function(data_file, organism = "human", rank = "length", 
+    n_prts = 20, mode = "phobius", size_txt = 2, space_left = -400, temp = FALSE, 
+    tmhmm_folder_name = NULL) {
+    old <- getwd()
+    if_aa <- FALSE
+    final_trans <- clean_data(data_file, if_aa, organism)
+    princ <- ensembl_db_retrieval(organism)
+    final_pairs <- merge_trans(princ, final_trans, if_aa)
+    aa_trans <- format_ids(final_pairs)
+    AA_seq <- get_prts(aa_trans, temp)
+    if (mode == "phobius") {
+        topo <- run_phobius(AA_seq, paste(getwd(), "/AA.fasta", sep = ""))
+    }
+    if (mode == "tmhmm") {
+        topo <- get_tmhmm("AA.fasta", tmhmm_folder_name)
+    }
+    counts <- process_tmhmm(topo, AA_seq)
+    p <- graph_prots(counts, rank, n_prts, size_txt, space_left)
+    setwd(old)
+    p
 }

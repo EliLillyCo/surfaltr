@@ -10,16 +10,15 @@
 #' results, a message stating that the test worked will be printed. If not, the
 #' user will be prompted to check the installation
 #' @examples
-#'  tmhmm_folder_name <- "~/TMHMM2.0c"
-#' if (check_tmhmm_install(tmhmm_folder_name)) {
+#' \donttest{
 #' test_surfaltr()
 #' }
 #' @importFrom dplyr all_equal
+#' @export
 
 test_surfaltr <- function() {
     old <- getwd()
-    AA_seq <- get_pairs(system.file("extdata", "CRB1.csv", package = "surfaltr"), 
-                        TRUE, "mouse", TRUE)
+    AA_seq <- get_pairs(system.file("extdata", "CRB1.csv", package = "surfaltr"), TRUE, "mouse", TRUE)
     topo <- run_phobius(AA_seq, paste(getwd(), "/AA.fasta", sep = ""))
     counts <- process_tmhmm(topo, AA_seq)
     final_test <- rank_prts(counts, "combo", 50)

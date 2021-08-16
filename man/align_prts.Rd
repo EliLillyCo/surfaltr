@@ -4,7 +4,8 @@
 \alias{align_prts}
 \title{Get aligned amino acid sequences for gene transcripts}
 \usage{
-align_prts(gene_names, data_file, if_aa = FALSE, organism = "human", temp = FALSE)
+align_prts(gene_names, data_file, if_aa = FALSE, organism = "human", 
+temp = FALSE)
 }
 \arguments{
 \item{gene_names}{Vector containing names of genes of interest
@@ -36,6 +37,10 @@ aligned sequences to the working directory under a file labeled with the
 gene name.
 }
 \examples{
-align_prts(c("Crb1"), system.file("extdata", "crb1_example.csv",
-package = "surfaltr"), TRUE, "mouse", TRUE)
+tmhmm_folder_name <- "~/TMHMM2.0c"
+if (check_tmhmm_install(tmhmm_folder_name)) {
+    align_prts(c("Crb1"), system.file("extdata", "crb1_example.csv",
+        package = "surfaltr"
+    ), TRUE, "mouse", TRUE)
+}
 }

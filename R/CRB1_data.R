@@ -8,10 +8,10 @@
 #'
 #' @format A data frame with 36 rows and 3 variables:
 #' \describe{
-#'   \item{external_gene_name}{Gene name corresponding to amino acid sequence}
-#'   \item{transcript_id}{transcript ID corresponding to amino acid sequence}
-#'   \item{protein_sequence}{amino acid sequence of transcript}
-#'   ...
+#' \item{external_gene_name}{Gene name corresponding to amino acid sequence}
+#' \item{transcript_id}{transcript ID corresponding to amino acid sequence}
+#' \item{protein_sequence}{amino acid sequence of transcript}
+#' ...
 #' }
 #' @source \url{https://www.nature.com/articles/s41467-020-17009-7#Sec45}
 "Crb1"

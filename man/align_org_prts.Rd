@@ -4,7 +4,8 @@
 \alias{align_org_prts}
 \title{Get aligned amino acid sequences for gene transcripts from multiple organisms}
 \usage{
-align_org_prts(gene_names, hs_data_file, mm_data_file, if_aa = FALSE, temp = FALSE)
+align_org_prts(gene_names, hs_data_file, mm_data_file, if_aa = FALSE, 
+temp = FALSE)
 }
 \arguments{
 \item{gene_names}{Vector containing names of genes of interest
@@ -26,10 +27,9 @@ Nothing is returned.
 }
 \description{
 This function allows a user to specify genes of interest and subsequently
-receive a pdf of all the corresponding aligned amino acid sequences in pdf
-format for both human and mice transcripts. In order for this to work,
-transcripts for the same genes from both organisms need to be
-provided in separate files.
+receive a pdf of all the corresponding aligned human and mouse amino acid 
+sequences. In order for this to work, transcripts for the same genes 
+from both organisms need to be provided in separate files.
 }
 \note{
 Although the function returns nothing, it saves pdfs containing the
@@ -39,8 +39,10 @@ be standardized to be fully capitalized, this may not match with the case
 of the gene name for some organisms.
 }
 \examples{
-align_org_prts(c("IGSF1"),
+tmhmm_folder_name <- "~/TMHMM2.0c"
+if (check_tmhmm_install(tmhmm_folder_name)) {align_org_prts( c("IGSF1"),
 system.file("extdata", "hpa_example.csv", package = "surfaltr"),
-system.file("extdata", "hpa_mouse_example.csv", package = "surfaltr"),
-FALSE, TRUE)
+system.file("extdata", "hpa_mouse_example.csv", 
+package = "surfaltr"),
+FALSE, TRUE)}
 }

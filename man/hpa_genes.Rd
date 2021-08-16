@@ -3,13 +3,14 @@
 \docType{data}
 \name{hpa_genes}
 \alias{hpa_genes}
-\title{SurfaltR Gene Name and Transcript ID Test Data- Highly Expressed Human Alternative Transcripts}
+\title{SurfaltR Gene Name and Transcript ID Test Data- Highly Expressed Human 
+Alternative Transcripts}
 \format{
 A data frame with 10 rows and 2 variables:
 \describe{
-  \item{gene_name}{Gene name corresponding to transcript ID}
-  \item{transcript}{transcript ID of gene of interest}
-  ...
+\item{gene_name}{Gene name corresponding to transcript ID}
+\item{transcript}{transcript ID of gene of interest}
+...
 }
 }
 \source{

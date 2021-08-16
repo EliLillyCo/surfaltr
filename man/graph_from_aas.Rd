@@ -53,6 +53,11 @@ amino acids. Each fill color corresponds to a membrane location and either
 principal or alternative isoform.
 }
 \examples{
-graph_from_aas(system.file("extdata", "crb1_example.csv", package = "surfaltr"),
-"mouse", "combo", 1, "phobius", 4, -300, TRUE)
+tmhmm_folder_name <- "~/TMHMM2.0c"
+if (check_tmhmm_install(tmhmm_folder_name)) {
+    graph_from_aas(
+        system.file("extdata", "crb1_example.csv", package = "surfaltr"),
+        "mouse", "combo", 1, "tmhmm", 4, -300, TRUE
+    )
+}
 }

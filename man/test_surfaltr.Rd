@@ -20,7 +20,8 @@ results, a message stating that the test worked will be printed. If not, the
 user will be prompted to check the installation
 }
 \examples{
-\donttest{
+ tmhmm_folder_name <- "~/TMHMM2.0c"
+if (check_tmhmm_install(tmhmm_folder_name)) {
 test_surfaltr()
 }
 }

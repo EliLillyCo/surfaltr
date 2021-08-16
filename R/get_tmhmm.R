@@ -21,39 +21,39 @@
 #' directory.
 #' @importFrom utils write.csv
 #' @examples
-#' \donttest{
 #' tmhmm_folder_name <- "~/TMHMM2.0c"
-#' if(check_tmhmm_install(tmhmm_folder_name)){
-#'   AA_seq <- get_pairs(system.file("extdata", "crb1_example.csv",
-#'   package = "surfaltr"), TRUE, "mouse", TRUE)
-#'   topo <- get_tmhmm("AA.fasta", tmhmm_folder_name)
-#' }
+#' if (check_tmhmm_install(tmhmm_folder_name)) {
+#'     AA_seq <- get_pairs(system.file("extdata", "crb1_example.csv",
+#'         package = "surfaltr"
+#'     ), TRUE, "mouse", TRUE)
+#'     topo <- get_tmhmm("AA.fasta", tmhmm_folder_name)
 #' }
 #' @export
 
 
-
-get_tmhmm <- function(fasta_file_name, tmhmm_folder_name){
-  if(!(check_tmhmm_install(tmhmm_folder_name))){
-    stop("Please check your TMHMM installation and the provided path.")
-  }
-  topo_fasta <- tmhmm_fix_path(fasta_file_name, tmhmm_folder_name)
-  topo_fasta <- data.frame(topo_fasta)
-  topo <- data.frame("Transcript_ID" = character(0),"Output" = character(0))
-  id_val <- 0
-  for (row in 1:(nrow(topo_fasta))){
-    curr_sub <- substr(topo_fasta[row,], 1, 1)
-    if(curr_sub == ">"){
-      topo[nrow(topo) + 1,"Transcript_ID"] = substr(topo_fasta[row,],2,nchar(topo_fasta[row,]))
-      id_val <- id_val + 1
-    } else {
-      if(is.na(nchar(topo[id_val,"Output"], keepNA= TRUE))){
-        topo[id_val,"Output"] = topo_fasta[row,]
-      } else {
-        topo[id_val,"Output"] = paste(topo[id_val, "Output"], topo_fasta[row,], sep = "")
-      }
+get_tmhmm <- function(fasta_file_name, tmhmm_folder_name) {
+    if (!(check_tmhmm_install(tmhmm_folder_name))) {
+        stop("Please check your TMHMM installation and the provided path.")
     }
-  }
-  write.csv(topo, paste(getwd(), "/mem_topo_tmhmm.csv", sep = ""))
-  return(topo)
+    topo_fasta <- tmhmm_fix_path(fasta_file_name, tmhmm_folder_name)
+    topo_fasta <- data.frame(topo_fasta)
+    topo <- data.frame("Transcript_ID" = character(0), "Output" = character(0))
+    id_val <- 0
+    for (row in seq_len(nrow(topo_fasta))) {
+        curr_sub <- substr(topo_fasta[row, ], 1, 1)
+        if (curr_sub == ">") {
+            topo[nrow(topo) + 1, "Transcript_ID"] <- substr(topo_fasta[row, ], 
+            2, nchar(topo_fasta[row, ]))
+            id_val <- id_val + 1
+        } else {
+            if (is.na(nchar(topo[id_val, "Output"], keepNA = TRUE))) {
+                topo[id_val, "Output"] <- topo_fasta[row, ]
+            } else {
+                topo[id_val, "Output"] <- paste(topo[id_val, "Output"], 
+                topo_fasta[row, ], sep = "")
+            }
+        }
+    }
+    write.csv(topo, paste(getwd(), "/mem_topo_tmhmm.csv", sep = ""))
+    return(topo)
 }

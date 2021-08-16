@@ -17,16 +17,14 @@ if TMHMM 2.0 is located at the path specified and FALSE if it is not.
 \description{
 This function checks to make sure that TMHMM is installed correctly
 at the file path specified by the user. If TMHMM is not installed correctly,
-then the function will output an error message telling the user to check their
-installation.
+then the function will output an error message telling the user to check 
+their installation.
 }
 \note{
 This function also prints a helpful method providing tips on how
 to fix the installation if TMHMM is not found at the folder path specified.
 }
 \examples{
-\donttest{
 tmhmm_folder_name <- "~/TMHMM2.0c"
 install_correct <- check_tmhmm_install(tmhmm_folder_name)
-}
 }

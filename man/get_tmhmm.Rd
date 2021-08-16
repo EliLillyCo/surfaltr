@@ -33,12 +33,11 @@ returned data frame in csv format to the output folder in the working
 directory.
 }
 \examples{
-\donttest{
 tmhmm_folder_name <- "~/TMHMM2.0c"
-if(check_tmhmm_install(tmhmm_folder_name)){
-  AA_seq <- get_pairs(system.file("extdata", "crb1_example.csv",
-  package = "surfaltr"), TRUE, "mouse", TRUE)
-  topo <- get_tmhmm("AA.fasta", tmhmm_folder_name)
-}
+if (check_tmhmm_install(tmhmm_folder_name)) {
+    AA_seq <- get_pairs(system.file("extdata", "crb1_example.csv",
+        package = "surfaltr"
+    ), TRUE, "mouse", TRUE)
+    topo <- get_tmhmm("AA.fasta", tmhmm_folder_name)
 }
 }

@@ -33,7 +33,7 @@ follow 2 formats — the first option only contain transcript IDs and gene
 names and the second option contains a unique transcript identifier, gene
 names, and amino acid sequences. The function will return a data frame
 containing the transcript IDs, gene names, and APPRIS Annotation for each
-inputted transcript. If the amino acid sequence is included in the input data,
-this will also be included in the data frame. If only gene names and
+inputted transcript. If the amino acid sequence is included in the input 
+data, this will also be included in the data frame. If only gene names and
 transcript IDS are provided, UniProt IDs will be included in the data frame.
 }

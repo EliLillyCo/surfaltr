@@ -9,10 +9,11 @@ graph_prots(counts, rank = "length", n_prts = 20, size_txt = 2,
 space_left = -400)
 }
 \arguments{
-\item{counts}{A data frame containing the overall length and individual lengths of
-each section of the surface protein corresponding to a certain transcript.}
+\item{counts}{A data frame containing the overall length and individual 
+lengths of each section of the surface protein corresponding to a certain 
+transcript.}
 
-\item{rank}{String indicating which method to use to rank proteins in graphicl
+\item{rank}{String indicating which method to use to rank proteins in graphical
 output. Options include "Length", "TM", and "Combo".}
 
 \item{n_prts}{Integer value indicating the number of genes that should be

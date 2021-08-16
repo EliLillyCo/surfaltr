@@ -1,4 +1,5 @@
-#' SurfaltR Gene Name and Transcript ID Test Data- Highly Expressed Human Alternative Transcripts
+#' SurfaltR Gene Name and Transcript ID Test Data- Highly Expressed Human 
+#' Alternative Transcripts
 #'
 #' For the gene name and transcript ID input, we have included 10 unique human
 #' transcripts from 7 different genes annotated as alternative by APPRIS. These
@@ -7,9 +8,9 @@
 #'
 #' @format A data frame with 10 rows and 2 variables:
 #' \describe{
-#'   \item{gene_name}{Gene name corresponding to transcript ID}
-#'   \item{transcript}{transcript ID of gene of interest}
-#'   ...
+#' \item{gene_name}{Gene name corresponding to transcript ID}
+#' \item{transcript}{transcript ID of gene of interest}
+#' ...
 #' }
 #' @source \url{https://science.sciencemag.org/content/347/6220/1260419/tab-figures-data}
 "hpa_genes"

@@ -27,18 +27,21 @@
 #' @param space_left Integer value specifying how far left the graph should
 #' extend.
 #' @examples
-#' \donttest{
-#' currwd <- getwd()
-#' AA_seq <- get_pairs(system.file("extdata", "crb1_example.csv",
-#' package = "surfaltr"), TRUE, "mouse", TRUE)
-#' topo <- run_phobius(AA_seq, paste(getwd(), "/AA.fasta", sep = ""))
-#' plot_isoforms(topo, AA_seq, "combo", 15, 3, -400)
-#' setwd(currwd)
+#' tmhmm_folder_name <- "~/TMHMM2.0c"
+#' if (check_tmhmm_install(tmhmm_folder_name)) {
+#'     currwd <- getwd()
+#'     AA_seq <- get_pairs(system.file("extdata", "crb1_example.csv",
+#'         package = "surfaltr"
+#'     ), TRUE, "mouse", TRUE)
+#'     topo <- run_phobius(AA_seq, paste(getwd(), "/AA.fasta", sep = ""))
+#'     plot_isoforms(topo, AA_seq, "combo", 15, 3, -400)
+#'     setwd(currwd)
 #' }
 #' @export
 
-plot_isoforms <- function(topo, AA_seq, rank = "length", n_prts = 20, size_txt = 2, space_left = -400){
-  counts <- process_tmhmm(topo, AA_seq)
-  p <- graph_prots(counts, rank, n_prts, size_txt, space_left)
-  p
+plot_isoforms <- function(topo, AA_seq, rank = "length", n_prts = 20, 
+    size_txt = 2, space_left = -400) {
+    counts <- process_tmhmm(topo, AA_seq)
+    p <- graph_prots(counts, rank, n_prts, size_txt, space_left)
+    p
 }

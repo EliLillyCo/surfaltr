@@ -1,9 +1,18 @@
 Package: surfaltr
 Type: Package
-Title: SurfaltR: An R Package Facilitating the Rapid Comparison of Surface Protein 
-    Isoform Membrane Topologies
-Version: 1.0.0
-Author: Aditi Merchant, Pooja Gangras
+Title: Rapid Comparison of Surface Protein Isoform Membrane Topologies
+        Through surfaltR
+Version: 1.2.0
+Authors@R: 
+      c(person(given = "Pooja",
+           family = "Gangras",
+           role = c("aut", "cre"),
+           email = "gangras_pooja@lilly.com",
+           comment = c(ORCID = "0000-0002-0638-3941")),
+      person(given = "Aditi",
+           family = "Merchant",  
+           email = "aditi.merchant@utexas.edu",
+           role = "aut"))
 Maintainer: Pooja Gangras <gangras_pooja@lilly.com>
 Description: Cell surface proteins form a major fraction of the druggable proteome
   and can be used for tissue-specific delivery of oligonucleotide/cell-based therapeutics. 
@@ -17,30 +26,20 @@ Description: Cell surface proteins form a major fraction of the druggable proteo
   annotated principal counterparts, predicts their TM topologies using TMHMM or Phobius, 
   and generates a customizable graphical output. Further, surfaltR facilitates the 
   prioritization of biologically diverse isoform pairs through the incorporation 
-  of three different ranking metrics and through protein alignment functions.
+  of three different ranking metrics and through protein alignment functions. Citations for programs mentioned here can be found in the vignette.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
-Imports:
-	dplyr (>= 1.0.6),
-	biomaRt (>= 2.46.0),
-	protr (>= 1.6-2),
-	seqinr (>= 4.2-5),
-	ggplot2 (>= 3.3.2),
-	utils (>= 2.10.1),
-	stringr (>= 1.4.0), 
-	msa (>= 1.22.0),
-	Biostrings (>= 2.58.0),
-	readr (>= 1.4.0),
-	httr (>= 1.4.2), 
-	testthat(>= 3.0.0),
-	xml2(>= 1.3.2)
+Imports: dplyr (>= 1.0.6), biomaRt (>= 2.46.0), protr (>= 1.6-2),
+        seqinr (>= 4.2-5), ggplot2 (>= 3.3.2), utils (>= 2.10.1),
+        stringr (>= 1.4.0), Biostrings (>= 2.58.0),readr (>= 1.4.0), 
+        httr (>= 1.4.2), testthat(>= 3.0.0), xml2(>=
+        1.3.2), msa (>= 1.22.0), methods (>= 4.0.3)
 RoxygenNote: 7.1.1
-Suggests: 
-    knitr,
-    rmarkdown,
-    devtools,
-    kableExtra
+Suggests: knitr, rmarkdown, devtools, kableExtra 
 VignetteBuilder: knitr
-Depends: 
-    R (>= 4.0)
+Depends: R (>= 4.0)
+NeedsCompilation: no
+biocViews: Software, Visualization, DataRepresentation, SplicedAlignment, Alignment, MultipleSequenceAlignment,
+      MultipleComparison
+Packaged: 2021-08-11 14:53:05 UTC
+Config/testthat/edition: 3

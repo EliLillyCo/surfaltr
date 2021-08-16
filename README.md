@@ -2,7 +2,7 @@
 Surface proteins are hydrophobic and remain difficult to study thereby necessitating the use of TM topology prediction methods such as TMHMM (1) and Phobius (2). However, there exists a need for bioinformatic approaches to streamline batch processing of isoforms for comparing and visualizing topologies. To address this gap, we have developed an R package, SurfaltR. It pairs inputted isoforms, either known alternatively spliced or novel, with their APPRIS (3) annotated principal counterparts, predicts their TM topologies using TMHMM or Phobius, and generates a customizable graphical output. Further, SurfaltR facilitates the prioritization of biologically diverse isoform pairs through the incorporation of three different ranking metrics and through protein alignment functions.
 
 # Note: 
-If you use surfaltR in published research, please cite: <publication> 
+If you use surfaltR in published research, please cite this page and possibly a subsequent publication (will be updated later).
  
 # Installation: 
 As surfaltR is hosted on Github, the devtools package is needed to successfully install surfaltR. To install and load devtools, the following code can be used:
@@ -27,8 +27,7 @@ install_tmhmm("https://services.healthtech.dtu.dk/download/28c408dc-ef5e-47ad-a2
 In the code above, be sure to replace the URL shown in the quotation marks with the URL emailed to you after requesting the TMHMM 2.0 download. 
 
 # Phobius Installation
-As run_phobius() relies on the Phobius API, a copy of the software does not need to be downloaded on the user’s device. However, in order to ensure that sequences can be adequately processed in the R development environment, the “ragp” package needs to be installed. To install this package, the following code can be used:
-devtools::install_github("missuse/ragp")
+As run_phobius() relies on the Phobius API, a copy of the software does not need to be downloaded on the user’s device. 
   
 # Please refer to the vignette for detailed descriptions of workflow and functions.
 

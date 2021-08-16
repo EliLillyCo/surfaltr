@@ -20,48 +20,58 @@
 #' each section of the surface protein corresponding to a certain transcript.
 
 
-process_tmhmm <- function(topo, AA_seq){
-  counts <- data.frame("Membrane_Location" = character(0), "Count" = integer(0), "Transcript_ID" = character(0))
-  comma_data <-topo
-  for(row in 1:(nrow(comma_data))){
-    comma_data[row,"Output"] <-gsub("Si", "S,i", comma_data[row,"Output"])
-    comma_data[row,"Output"] <-gsub("So", "S,o", comma_data[row,"Output"])
-    comma_data[row,"Output"] <-gsub("SO", "S,O", comma_data[row,"Output"])
-    comma_data[row,"Output"] <-gsub("Mo", "M,o", comma_data[row,"Output"])
-    comma_data[row,"Output"] <-gsub("oM", "o,M", comma_data[row,"Output"])
-    comma_data[row,"Output"] <-gsub("MO", "M,O", comma_data[row,"Output"])
-    comma_data[row,"Output"] <-gsub("OM", "O,M", comma_data[row,"Output"])
-    comma_data[row,"Output"] <-gsub("iM", "i,M", comma_data[row,"Output"])
-    comma_data[row,"Output"] <-gsub("Mi", "M,i", comma_data[row,"Output"])
-    comma_data[row,"Output"] <-gsub("Oi", "O,i", comma_data[row,"Output"])
-    comma_data[row,"Output"] <-gsub("iO", "i,O", comma_data[row,"Output"])
-    comma_data[row,"Output"] <-gsub("oi", "o,i", comma_data[row,"Output"])
-    comma_data[row,"Output"] <-gsub("io", "i,o", comma_data[row,"Output"])
-    split_let <- unlist(stringr::str_split(comma_data[row,"Output"], ","))
-    let_counts <- data.frame(split_let)
-    let_counts <- dplyr::rename(let_counts, "Membrane_Location" = "split_let")
-    let_counts$counts <- c(nchar(split_let))
-    let_counts <- dplyr::rename(let_counts, "Count" = "counts")
-    for(val in 1:(nrow(let_counts))){
-      let_counts[val,"Membrane_Location"] <- substr(let_counts[val, "Membrane_Location"], 1, 1)
-      let_counts[val,"Transcript_ID"] <- topo[row,"Transcript_ID"]
-      let_counts[val,"Gene_Name"] <- AA_seq[row,"external_gene_name"]
-      let_counts[val,"APPRIS_Annotation"] <- paste(AA_seq[row,"transcript_appris"], "_")
-      let_counts[val, "Order"] <- row
-      if(val == 1){
-        let_counts[val, "Begin"] <- 1
-        let_counts[val,"End"] <- let_counts[val,"Count"]
-      } else {
-        let_counts[val, "Begin"] <- let_counts[val-1,"End"]
-        let_counts[val,"End"] <- let_counts[val-1,"End"]+let_counts[val,"Count"]
-      }
+process_tmhmm <- function(topo, AA_seq) {
+    counts <- data.frame("Membrane_Location" = character(0), "Count" = integer(0), "Transcript_ID" = character(0))
+    comma_data <- topo
+    for (row in seq_len(nrow(comma_data))) {
+        comma_data[row, "Output"] <- gsub("Si", "S,i", comma_data[row, "Output"])
+        comma_data[row, "Output"] <- gsub("So", "S,o", comma_data[row, "Output"])
+        comma_data[row, "Output"] <- gsub("SO", "S,O", comma_data[row, "Output"])
+        comma_data[row, "Output"] <- gsub("Mo", "M,o", comma_data[row, "Output"])
+        comma_data[row, "Output"] <- gsub("oM", "o,M", comma_data[row, "Output"])
+        comma_data[row, "Output"] <- gsub("MO", "M,O", comma_data[row, "Output"])
+        comma_data[row, "Output"] <- gsub("OM", "O,M", comma_data[row, "Output"])
+        comma_data[row, "Output"] <- gsub("iM", "i,M", comma_data[row, "Output"])
+        comma_data[row, "Output"] <- gsub("Mi", "M,i", comma_data[row, "Output"])
+        comma_data[row, "Output"] <- gsub("Oi", "O,i", comma_data[row, "Output"])
+        comma_data[row, "Output"] <- gsub("iO", "i,O", comma_data[row, "Output"])
+        comma_data[row, "Output"] <- gsub("oi", "o,i", comma_data[row, "Output"])
+        comma_data[row, "Output"] <- gsub("io", "i,o", comma_data[row, "Output"])
+        split_let <- unlist(stringr::str_split(comma_data[row, "Output"], ","))
+        let_counts <- data.frame(split_let)
+        let_counts <- dplyr::rename(let_counts, "Membrane_Location" = "split_let")
+        let_counts$counts <- c(nchar(split_let))
+        let_counts <- dplyr::rename(let_counts, "Count" = "counts")
+        for (val in seq_len(nrow(let_counts))) {
+            let_counts[val, "Membrane_Location"] <- substr(let_counts[val, 
+            "Membrane_Location"], 1, 1)
+            let_counts[val, "Transcript_ID"] <- topo[row, "Transcript_ID"]
+            let_counts[val, "Gene_Name"] <- AA_seq[row, "external_gene_name"]
+            let_counts[val, "APPRIS_Annotation"] <- paste(AA_seq[row, 
+            "transcript_appris"], "_")
+            let_counts[val, "Order"] <- row
+            if (val == 1) {
+                let_counts[val, "Begin"] <- 1
+                let_counts[val, "End"] <- let_counts[val, "Count"]
+            } else {
+                let_counts[val, "Begin"] <- let_counts[val - 1, "End"]
+                let_counts[val, "End"] <- let_counts[val - 1, "End"] + 
+                let_counts[val, "Count"]
+            }
+        }
+        let_counts <- rbind(
+            c(
+                topo[row, "Transcript_ID"], 100, topo[row, "Transcript_ID"],
+                AA_seq[row, "external_gene_name"], "", row, 1, 
+                let_counts[nrow(let_counts), "End"]
+            ),
+            let_counts
+        )
+        counts <- rbind(counts, let_counts)
     }
-    let_counts<- rbind(c(topo[row,"Transcript_ID"], 100, topo[row,"Transcript_ID"],
-                         AA_seq[row,"external_gene_name"], "", row, 1, let_counts[nrow(let_counts),"End"]),
-                       let_counts)
-    counts <- rbind(counts, let_counts)
-  }
-  counts <- subset(counts, select = c("Gene_Name", "Transcript_ID", "Membrane_Location",
-                                      "Begin", "End", "Order", "APPRIS_Annotation"))
-  return(counts)
+    counts <- subset(counts, select = c(
+        "Gene_Name", "Transcript_ID", "Membrane_Location",
+        "Begin", "End", "Order", "APPRIS_Annotation"
+    ))
+    return(counts)
 }

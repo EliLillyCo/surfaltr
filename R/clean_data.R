@@ -9,8 +9,8 @@
 #' names and the second option contains a unique transcript identifier, gene
 #' names, and amino acid sequences. The function will return a data frame
 #' containing the transcript IDs, gene names, and APPRIS Annotation for each
-#' inputted transcript. If the amino acid sequence is included in the input data,
-#' this will also be included in the data frame. If only gene names and
+#' inputted transcript. If the amino acid sequence is included in the input 
+#' data, this will also be included in the data frame. If only gene names and
 #' transcript IDS are provided, UniProt IDs will be included in the data frame.
 #'
 #' @usage clean_data(data_file, if_aa, organism)
@@ -33,93 +33,119 @@
 
 
 
-clean_data <- function(data_file, if_aa, organism){
-  all_genome_data <- read.csv(file = data_file, header = TRUE)
-  if (if_aa == TRUE){
-    if(!("external_gene_name" %in%  colnames(all_genome_data)) |
-       !("transcript_id" %in%  colnames(all_genome_data)) |
-       !("protein_sequence" %in%  colnames(all_genome_data))){
-      stop("Your input data has incorrect column names. Please rename columns according to this
-      function's help page before proceeding.")
-    }
-    final_trans <- all_genome_data
-    final_trans$transcript_appris <- ""
-    final_trans <- dplyr::rename(final_trans, "ensembl_transcript_id" = "transcript_id")
-    return(final_trans)
-  }
-  if (if_aa == FALSE){
-    if(!("gene_name" %in%  colnames(all_genome_data)) |
-       !("transcript" %in%  colnames(all_genome_data))){
-      stop("Your input data has incorrect column names. Please rename columns according to this
-      function's help page before proceeding.")
-    }
-    all_genome_data <- dplyr::distinct(all_genome_data, all_genome_data$transcript,.keep_all = TRUE)
-    if(organism == "human"){
-      httr::set_config(httr::config(ssl_verifypeer = 0L))
-      ensembl <- biomaRt::useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl",
-                                     mirror = 'useast')
-      compare <- biomaRt::getBM(attributes = c("external_gene_name", "ensembl_transcript_id",
-                                               "transcript_appris", "transcript_biotype",
-                                               "uniprotswissprot", "uniprotsptrembl", "uniprot_isoform"),
-                                mart = ensembl)
-      merge_trans <- merge( x= compare, y = all_genome_data, by.x = "ensembl_transcript_id",
-                            by.y = "transcript")
-      if(nrow(merge_trans) == 0){
-        stop("Please make sure your organism is correct and your transcript IDs are valid
-        and contain no decimal values before continuing. ")
-      }
-      merge_trans <- merge_trans[ which(merge_trans$transcript_appris != "principal1"
-                                        & merge_trans$transcript_appris != "principal2"
-                                        & merge_trans$transcript_appris != "principal3"
-                                        & merge_trans$transcript_appris != "principal4"
-                                        & merge_trans$transcript_appris != "principal5"), ]
-      for (row in 1:nrow(merge_trans)){
-        type <- merge_trans[row, "transcript_biotype"]
-        trans <- merge_trans[row, "ensembl_transcript_id"]
-        if(type != "protein_coding"){
-          print("The transcript")
-          print(trans)
-          print("is non-protein coding. It has been removed from further analysis.")
+clean_data <- function(data_file, if_aa, organism) {
+    all_genome_data <- read.csv(file = data_file, header = TRUE)
+    if (if_aa == TRUE) {
+        if (!("external_gene_name" %in% colnames(all_genome_data)) |
+            !("transcript_id" %in% colnames(all_genome_data)) |
+            !("protein_sequence" %in% colnames(all_genome_data))) {
+            stop("Your input data has incorrect column names. Please rename 
+            columns according to this function's help page before proceeding.")
         }
-      }
-      final_trans <- merge_trans[grep("protein_coding", merge_trans$transcript_biotype),]
-      final_trans <- subset(final_trans, select = c("ensembl_transcript_id",
-                                                    "external_gene_name", "transcript_appris",
-                                                    "uniprotswissprot", "uniprotsptrembl",
-                                                    "uniprot_isoform"))
+        final_trans <- all_genome_data
+        final_trans$transcript_appris <- ""
+        final_trans <- dplyr::rename(final_trans, "ensembl_transcript_id" = 
+                                    "transcript_id")
+        return(final_trans)
     }
-    if(organism == "mouse"){
-      ensembl <- biomaRt::useEnsembl(biomart = "genes", dataset = "mmusculus_gene_ensembl")
-      compare <- biomaRt::getBM(attributes = c("external_gene_name",
-                                               "ensembl_transcript_id",
-                                               "transcript_appris", "transcript_biotype",
-                                               "uniprotswissprot", "uniprotsptrembl", "uniprot_isoform"),
-                                mart = ensembl)
-      merge_trans <- merge( x= compare, y = all_genome_data, by.x = "ensembl_transcript_id", by.y = "transcript")
-      if(nrow(merge_trans) == 0){
-        stop("Please make sure your organism is correct and your transcript IDs are valid
-        and contain no decimal values before continuing. ")
-      }
-      merge_trans <- merge_trans[ which(merge_trans$transcript_appris != "principal1"
-                                        & merge_trans$transcript_appris != "principal2"
-                                        & merge_trans$transcript_appris != "principal3"
-                                        & merge_trans$transcript_appris != "principal4"
-                                        & merge_trans$transcript_appris != "principal5"), ]
-      for (row in 1:nrow(merge_trans)){
-        type <- merge_trans[row, "transcript_biotype"]
-        trans <- merge_trans[row, "ensembl_transcript_id"]
-        if(type != "protein_coding"){
-          print("The transcript")
-          print(trans)
-          print("is non-protein coding. It has been removed from further analysis.")
+    if (if_aa == FALSE) {
+        if (!("gene_name" %in% colnames(all_genome_data)) |
+            !("transcript" %in% colnames(all_genome_data))) {
+            stop("Your input data has incorrect column names. Please rename 
+            columns according to this function's help page before proceeding.")
         }
-      }
-      final_trans <- merge_trans[grep("protein_coding", merge_trans$transcript_biotype),]
-      final_trans <- subset(final_trans, select = c("ensembl_transcript_id",
-                                                    "external_gene_name", "transcript_appris",
-                                                    "uniprotswissprot", "uniprotsptrembl",
-                                                    "uniprot_isoform"))
+        all_genome_data <- dplyr::distinct(all_genome_data, 
+        all_genome_data$transcript, .keep_all = TRUE)
+        if (organism == "human") {
+            httr::set_config(httr::config(ssl_verifypeer = 0L))
+            ensembl <- biomaRt::useEnsembl(
+                biomart = "genes", dataset = "hsapiens_gene_ensembl",
+                mirror = "useast"
+            )
+            compare <- biomaRt::getBM(
+                attributes = c(
+                    "external_gene_name", "ensembl_transcript_id",
+                    "transcript_appris", "transcript_biotype",
+                    "uniprotswissprot", "uniprotsptrembl", "uniprot_isoform"
+                ),
+                mart = ensembl
+            )
+            merge_trans <- merge(
+                x = compare, y = all_genome_data, by.x = "ensembl_transcript_id",
+                by.y = "transcript"
+            )
+            if (nrow(merge_trans) == 0) {
+        stop("Please make sure your organism is correct and your transcript IDs 
+        are valid and contain no decimal values before continuing. ")
+            }
+            merge_trans <- merge_trans[which(
+                merge_trans$transcript_appris != "principal1" &
+                merge_trans$transcript_appris != "principal2" &
+                merge_trans$transcript_appris != "principal3" &
+                merge_trans$transcript_appris != "principal4" &
+                merge_trans$transcript_appris != "principal5"), ]
+            for (row in seq_len(nrow(merge_trans))) {
+                type <- merge_trans[row, "transcript_biotype"]
+                trans <- merge_trans[row, "ensembl_transcript_id"]
+                if (type != "protein_coding") {
+                    print("The transcript")
+                    print(trans)
+                    print("is non-protein coding. It has been removed 
+                          from further analysis.")
+                }
+            }
+            final_trans <- merge_trans[grep("protein_coding", 
+                           merge_trans$transcript_biotype), ]
+            final_trans <- subset(final_trans, select = c(
+                "ensembl_transcript_id",
+                "external_gene_name", "transcript_appris",
+                "uniprotswissprot", "uniprotsptrembl",
+                "uniprot_isoform"
+            ))
+        }
+        if (organism == "mouse") {
+            ensembl <- biomaRt::useEnsembl(biomart = "genes", 
+                                           dataset = "mmusculus_gene_ensembl")
+            compare <- biomaRt::getBM(
+                attributes = c(
+                    "external_gene_name",
+                    "ensembl_transcript_id",
+                    "transcript_appris", "transcript_biotype",
+                    "uniprotswissprot", "uniprotsptrembl", "uniprot_isoform"
+                ),
+                mart = ensembl
+            )
+            merge_trans <- merge(x = compare, y = all_genome_data, 
+            by.x = "ensembl_transcript_id", by.y = "transcript")
+            if (nrow(merge_trans) == 0) {
+                stop("Please make sure your organism is correct and your 
+            transcript IDs are validand contain no decimal values 
+            before continuing. ")
+            }
+            merge_trans <- merge_trans[which(
+                merge_trans$transcript_appris != "principal1" &
+                merge_trans$transcript_appris != "principal2" &
+                merge_trans$transcript_appris != "principal3" &
+                merge_trans$transcript_appris != "principal4" &
+                merge_trans$transcript_appris != "principal5"), ]
+            for (row in seq_len(nrow(merge_trans))) {
+                type <- merge_trans[row, "transcript_biotype"]
+                trans <- merge_trans[row, "ensembl_transcript_id"]
+                if (type != "protein_coding") {
+                print("The transcript")
+                print(trans)
+                print("is non-protein coding. It has been removed from further 
+                analysis.")}
+            }
+            final_trans <- merge_trans[grep("protein_coding", 
+                                            merge_trans$transcript_biotype), ]
+            final_trans <- subset(final_trans, select = c(
+                "ensembl_transcript_id",
+                "external_gene_name", "transcript_appris",
+                "uniprotswissprot", "uniprotsptrembl",
+                "uniprot_isoform"
+            ))
+        }
+        return(final_trans)
     }
-    return(final_trans)
-  }
 }

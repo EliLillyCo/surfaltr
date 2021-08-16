@@ -29,28 +29,33 @@
 #' working directory.
 #' @importFrom utils "write.csv"
 #' @examples
-#' \donttest{
-#' currwd <- getwd()
-#' AA_seq <- get_pairs(system.file("extdata", "crb1_example.csv",
-#' package = "surfaltr"), TRUE, "mouse", TRUE)
-#' setwd(currwd)
+#' tmhmm_folder_name <- "~/TMHMM2.0c"
+#' if (check_tmhmm_install(tmhmm_folder_name)) {
+#'     currwd <- getwd()
+#'     AA_seq <- get_pairs(system.file("extdata", "crb1_example.csv",
+#'         package = "surfaltr"
+#'     ), TRUE, "mouse", TRUE)
+#'     setwd(currwd)
 #' }
 #' @export
 
-get_pairs <- function(data_file, if_aa = FALSE, organism = "human", temp = FALSE){
-  final_trans <- clean_data(data_file, if_aa, organism)
-  princ <- ensembl_db_retrieval(organism)
-  final_pairs <- merge_trans(princ, final_trans, if_aa)
-  if (if_aa == FALSE){
-    aa_trans <- format_ids(final_pairs)
-    AA_seq <- get_prts(aa_trans, temp)
-    expt <- data.frame(lapply(AA_seq, as.character), stringsAsFactors=FALSE)
-    write.csv(expt, paste(getwd(), "/transcript_pairs.csv", sep = ""))
-  }
-  if (if_aa == TRUE){
-    AA_seq <- get_aas(final_pairs, temp)
-    expt <- data.frame(lapply(AA_seq, as.character), stringsAsFactors=FALSE)
-    write.csv(expt, paste(getwd(), "/transcript_pairs.csv", sep = ""))
-  }
-  return(AA_seq)
+get_pairs <- function(data_file, if_aa = FALSE, organism = "human", 
+    temp = FALSE) {
+    final_trans <- clean_data(data_file, if_aa, organism)
+    princ <- ensembl_db_retrieval(organism)
+    final_pairs <- merge_trans(princ, final_trans, if_aa)
+    if (if_aa == FALSE) {
+        aa_trans <- format_ids(final_pairs)
+        AA_seq <- get_prts(aa_trans, temp)
+        expt <- data.frame(lapply(AA_seq, as.character), 
+        stringsAsFactors = FALSE)
+        write.csv(expt, paste(getwd(), "/transcript_pairs.csv", sep = ""))
+    }
+    if (if_aa == TRUE) {
+        AA_seq <- get_aas(final_pairs, temp)
+        expt <- data.frame(lapply(AA_seq, as.character), 
+        stringsAsFactors = FALSE)
+        write.csv(expt, paste(getwd(), "/transcript_pairs.csv", sep = ""))
+    }
+    return(AA_seq)
 }
