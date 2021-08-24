@@ -1,2 +1,2 @@
-## surfaltr package 1.0.0.9000
+## surfaltr package 1.2.0
 ## New package
