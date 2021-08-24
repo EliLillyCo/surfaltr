@@ -393,6 +393,13 @@ test_surfaltr()
 
 If surfaltR is installed correctly, the function should print a message stating "The test was successful. SurfaltR works as expected!". If not, the function will print errors explaining what may be incorrect. This includes stating if any dependencies have not been installed, if surfaltR’s installation failed, if THMHMM is installed incorrectly, or if the working directory cannot be written to. 
 
+```{r, eval = FALSE}
+library(surfaltr)
+```
+
+```{r, eval = TRUE}
+sessionInfo()
+```
 ## __References__
 
 
@@ -409,3 +416,4 @@ knitr::opts_chunk$set(
 ```{r setup, include = FALSE}
 library(surfaltr)
 ```
+

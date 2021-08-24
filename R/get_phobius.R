@@ -286,7 +286,7 @@ get_phobius.list <- function(data, ...) {
         ".fasta",
         sep = ""
     )
-    if (is(data[[1]]) == "SeqFastaAA") {
+    if (is(data[[1]],"SeqFastaAA")) {
         dat <- lapply(data,
             paste0,
             collapse = ""
