@@ -2,7 +2,7 @@ Package: surfaltr
 Type: Package
 Title: Rapid Comparison of Surface Protein Isoform Membrane Topologies
         Through surfaltR
-Version: 1.2.0
+Version: 0.99.0
 Authors@R: 
       c(person(given = "Pooja",
            family = "Gangras",
