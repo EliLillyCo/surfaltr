@@ -13,7 +13,6 @@ Authors@R:
            family = "Merchant",  
            email = "aditi.merchant@utexas.edu",
            role = "aut"))
-Maintainer: Pooja Gangras <gangras_pooja@lilly.com>
 Description: Cell surface proteins form a major fraction of the druggable proteome
   and can be used for tissue-specific delivery of oligonucleotide/cell-based therapeutics. 
   Alternatively spliced surface protein isoforms have been shown to differ in their subcellular 
