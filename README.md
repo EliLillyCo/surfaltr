@@ -11,12 +11,12 @@ install.packages("devtools")
 library(devtools)
 Once remotes is installed, surfaltR can be installed using the following code:
 
-devtools::install_github("EliLillyCo/surfaltR")
+devtools::install_github("EliLillyCo/surfaltr")
 To load surfaltR, the following code can be used:
 
 library(surfaltr)
  
-The github repository for surfaltR containing all information related to the package can be found at https://github.com/EliLillyCo/surfaltR.
+The github repository for surfaltR containing all information related to the package can be found at https://github.com/EliLillyCo/surfaltr.
   
 # TMHMM standalone software Installation
 In order to be able to use TMHMM R package within surfaltR to predict membrane topology, it is important to first ensure that you have TMHMM 2.0 standalone software installed on your computer. To do this, simply navigate to https://services.healthtech.dtu.dk/service.php?TMHMM-2.0, and follow directions for installation of standalone software. In order to install TMHMM 2.0 in your R environment, you will also need the package “tmhmm”. The package should automatically install when you download the surfaltR package. In the event that this does not happen, you can use the following installation code:
