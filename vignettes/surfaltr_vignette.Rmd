@@ -241,14 +241,14 @@ In order predict TM topology using Phobius, surfaltR includes a function called 
 
 To run run_phobius alone, the following code can be used:
 ```{r, eval = FALSE}
-topo <- run_phobius(AA_seq = AA_lst, fasta_file_name = "~/surfaltr/AA.fasta")
+topo <- run_phobius(AA_seq = AA_lst, fasta_file_name = "~/<your-wd>/output/AA.fasta")
 ```
 
 To automatically generate the FASTA file used by the function, the following 
 code can be used:
 ```{r, eval = FALSE}
 AA_lst <- get_pairs(data_file = "~/CRB1.csv", if_aa = TRUE, organism = "mouse")
-mem_topo <- run_phobius(AA_seq = AA_lst, fasta_file_name = "~/surfaltr/AA.fasta")
+mem_topo <- run_phobius(AA_seq = AA_lst, fasta_file_name = "~/<your-wd>/output/AA.fasta")
 ```
 
 #### __When to Use Phobius__

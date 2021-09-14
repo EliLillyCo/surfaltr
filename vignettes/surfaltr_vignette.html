@@ -761,10 +761,10 @@ mem_topo &lt;- get_tmhmm(&quot;AA.fasta&quot;, tmhmm_folder_name = &quot;~/TMHMM
 <h4><strong>Using Phobius</strong></h4>
 <p>In order predict TM topology using Phobius, surfaltR includes a function called run_phobius(). This function takes in the AA.fasta file generated as the output of the get_pairs() function (fasta_file_name). Additionally, this function is reliant on the data frame returned by the get_pairs() function as an input parameter (AA_seq). The function will return a data frame (output as path to/working directory/mem_topo_phobius.csv) with the Phobius-predicted location for each amino acid in all the protein sequences. The topology is expressed as i- inside the plasma membrane, M- TM, o- outside the plasma membrane and s – signal peptide.</p>
 <p>To run run_phobius alone, the following code can be used:</p>
-<pre class="r"><code>topo &lt;- run_phobius(AA_seq = AA_lst, fasta_file_name = &quot;~/surfaltr/AA.fasta&quot;)</code></pre>
+<pre class="r"><code>topo &lt;- run_phobius(AA_seq = AA_lst, fasta_file_name = &quot;~/&lt;your-wd&gt;/output/AA.fasta&quot;)</code></pre>
 <p>To automatically generate the FASTA file used by the function, the following code can be used:</p>
 <pre class="r"><code>AA_lst &lt;- get_pairs(data_file = &quot;~/CRB1.csv&quot;, if_aa = TRUE, organism = &quot;mouse&quot;)
-mem_topo &lt;- run_phobius(AA_seq = AA_lst, fasta_file_name = &quot;~/surfaltr/AA.fasta&quot;)</code></pre>
+mem_topo &lt;- run_phobius(AA_seq = AA_lst, fasta_file_name = &quot;~/&lt;your-wd&gt;/output/AA.fasta&quot;)</code></pre>
 </div>
 <div id="when-to-use-phobius" class="section level4">
 <h4><strong>When to Use Phobius</strong></h4>
@@ -1147,7 +1147,7 @@ When used in combination, alignment results and isoform pair plots provide a pow
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] kableExtra_1.3.4 knitr_1.33       surfaltr_0.99.1  testthat_3.0.4  
+## [1] kableExtra_1.3.4 knitr_1.33       surfaltr_0.99.0  testthat_3.0.4  
 ## [5] devtools_2.4.2   usethis_2.0.1   
 ## 
 ## loaded via a namespace (and not attached):
