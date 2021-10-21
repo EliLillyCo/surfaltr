@@ -1,5 +1,5 @@
 ---
-title: "Rapid Comparison of Surface Protein Isoform Membrane Topologies Through surfaltR"
+title: "Rapid Comparison of Surface Protein Isoform Membrane Topologies Through surfaltr"
 output:
   html_document:
     toc: TRUE
@@ -22,7 +22,7 @@ library(kableExtra)
 ```
 
 ---
-title: "Rapid comparison of surface protein isoform membrane topologies by SurfaltR"
+title: "Rapid comparison of surface protein isoform membrane topologies by surfaltr"
 author: Aditi Merchant & Pooja Gangras
 output: rmarkdown::html_vignette
 vignette: >
@@ -35,36 +35,36 @@ vignette: >
 ---
 
 ## __Abstract__
-Cell surface proteins are of great biomedical relevance, serving as cell type differentiators and indicators of disease states [@juliano_integrin_2011]. Consequently, proteins on the plasma membrane form a major fraction of the druggable proteome and are also used to target novel therapeutic modalities to specific cells [@juliano_integrin_2011]. Alternatively spliced surface protein isoforms have been shown to differ based on their localization within cells and their transmembrane (TM) topology [@juliano_integrin_2011; @noauthor_frontiers_nodate]. Thus, in depth analysis of cell surface protein isoforms can not only expand the diversity of the druggable proteome but also aid in differentiating delivery between closely related cell types. The transcriptomic and proteomic approaches available today make it possible to identify several novel alternatively spliced isoforms [@zhao_integrin-targeting_2020]. However, there exists a need for bioinformatic approaches to streamline batch processing of isoforms to predict and visualize their TM topologies. To address this gap, we have developed an R package, SurfaltR, which matches inputted novel or alternative isoforms to their annotated principal counterparts, rapidly predicts their TM topologies, and generates a user-friendly graphical output. Further, SurfaltR facilitates the prioritization of biologically diverse isoform pairs through the incorporation of three different ranking metrics in the graphical output and through several protein alignment functions. This vignette explains how the package can be used and demonstrates two different workflows starting from either Ensembl transcript ID’s or amino acid sequence inputs.
+Cell surface proteins are of great biomedical relevance, serving as cell type differentiators and indicators of disease states [@juliano_integrin_2011]. Consequently, proteins on the plasma membrane form a major fraction of the druggable proteome and are also used to target novel therapeutic modalities to specific cells [@juliano_integrin_2011]. Alternatively spliced surface protein isoforms have been shown to differ based on their localization within cells and their transmembrane (TM) topology [@juliano_integrin_2011; @noauthor_frontiers_nodate]. Thus, in depth analysis of cell surface protein isoforms can not only expand the diversity of the druggable proteome but also aid in differentiating delivery between closely related cell types. The transcriptomic and proteomic approaches available today make it possible to identify several novel alternatively spliced isoforms [@zhao_integrin-targeting_2020]. However, there exists a need for bioinformatic approaches to streamline batch processing of isoforms to predict and visualize their TM topologies. To address this gap, we have developed an R package, surfaltr, which matches inputted novel or alternative isoforms to their annotated principal counterparts, rapidly predicts their TM topologies, and generates a user-friendly graphical output. Further, surfaltr facilitates the prioritization of biologically diverse isoform pairs through the incorporation of three different ranking metrics in the graphical output and through several protein alignment functions. This vignette explains how the package can be used and demonstrates two different workflows starting from either Ensembl transcript ID’s or amino acid sequence inputs.
 
 ## __Installation__ 
-#### __SurfaltR Installation__
-SurfaltR is freely available for download via Github. To install and load surfaltR, the following code can be used:
+#### __surfaltr Installation__
+surfaltr is freely available for download via Github. To install and load surfaltr, the following code can be used:
 ```{r, eval = FALSE}
-devtools::install_github("EliLillyCo/surfaltR")
+devtools::install_github("EliLillyCo/surfaltr")
 ```
-To load surfaltR, the following code can be used:
+To load surfaltr, the following code can be used:
 ```{r, eval = FALSE}
 library(surfaltr)
 ```
 
 
 #### __TMHMM Standalone Software Installation__
-In order to be able to use TMHMM R package [@krogh_predicting_2001] within surfaltR to predict membrane topology, it is important to first ensure that you have TMHMM 2.0 standalone software installed on your computer. To do this, simply navigate to https://services.healthtech.dtu.dk/service.php?TMHMM-2.0, and follow directions for installation of standalone software. Make sure to record the path to which TMHMM 2.0 is installed, as this information will be needed in order to run TMHMM in future functions.
+In order to be able to use TMHMM R package [@krogh_predicting_2001] within surfaltr to predict membrane topology, it is important to first ensure that you have TMHMM 2.0 standalone software installed on your computer. To do this, simply navigate to https://services.healthtech.dtu.dk/service.php?TMHMM-2.0, and follow directions for installation of standalone software. Make sure to record the path to which TMHMM 2.0 is installed, as this information will be needed in order to run TMHMM in future functions.
 
 #### __Phobius Installation__
-As run_phobius() relies on the Phobius API, a copy of the software does not need to be downloaded on the user’s device and will isntead automatically be called by the surfaltR functions.
+As run_phobius() relies on the Phobius API, a copy of the software does not need to be downloaded on the user’s device and will isntead automatically be called by the surfaltr functions.
 
 <a id="qs"></a>
 
-## __SurfaltR pipeline and quick start__
-SurfaltR allows users to have dynamic options about which output they want to receive through the presence of consensus functions allowing for rapid processing and individual functions producing intermediate outputs. SurfaltR allows users to pair novel isoforms or condition/tissue associated alternatively/mis-spliced isoforms with their counterpart principal isoforms, as annotated by APPRIS[@rodriguez_appris_2018]. It then predicts the TM topologies of isoform pairs using either TMHMM or Phobius, as inputted by user, and generates a plot for rapid cross-isoform comparison. Finally, it allows the user to generate cross-organism and single organism multiple sequence alignments of isoform pairs through the standalone functions align_prts() and align_org_prts(). All functionalities withing surfaltR are dependent on the most recent Ensembl human and mouse annotations (GRCh38.p13 and GRCm39 respectively) . The overall workflow of surfaltR is shown in the figure below:
+## __surfaltr pipeline and quick start__
+surfaltr allows users to have dynamic options about which output they want to receive through the presence of consensus functions allowing for rapid processing and individual functions producing intermediate outputs. surfaltr allows users to pair novel isoforms or condition/tissue associated alternatively/mis-spliced isoforms with their counterpart principal isoforms, as annotated by APPRIS[@rodriguez_appris_2018]. It then predicts the TM topologies of isoform pairs using either TMHMM or Phobius, as inputted by user, and generates a plot for rapid cross-isoform comparison. Finally, it allows the user to generate cross-organism and single organism multiple sequence alignments of isoform pairs through the standalone functions align_prts() and align_org_prts(). All functionalities withing surfaltr are dependent on the most recent Ensembl human and mouse annotations (GRCh38.p13 and GRCm39 respectively) . The overall workflow of surfaltr is shown in the figure below:
 <center>
 
 ```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
 knitr::include_graphics("Figure_1.png")
 ```
-Figure 1: Overall surfaltR workflow and functions.
+Figure 1: Overall surfaltr workflow and functions.
 
 </center>
 Now we describe the overall functions which will generate a plot of TM topologies for transcripts-of- interest paired with gene-matched annotated principal isoforms. To rapidly generate isoform pair plots, the functions graph_from_ids() or graph_from_aas() can be used. If you are using the graph_from_ids() function, input data should be formatted with only gene names and transcript IDs according to guidelines detailed in the [“Obtaining and Formatting Input Data Section”](#Obtaining_and_Formatting_Input_Data). If you are using the graph_from_aas() function, input data should be formatted with gene names, unique transcript identifiers, and amino acid sequences according to guidelines detailed in the [“Obtaining and Formatting Input Data Section”](#Obtaining_and_Formatting_Input_Data). Other input parameters are described in detail in the [“Rapid Plotting of Paired Isoforms”](#Rapid_Plotting_of_Paired_Isoforms) section below. 
@@ -79,26 +79,26 @@ graph_from_ids(data_file = "~/hpa_genes.csv", organism = "human",
                space_left = -400, temp = FALSE)
 ```
 
-## __How to get help for surfaltR__
+## __How to get help for surfaltr__
 All questions can be emailed to the maintainer at gangras_pooja@lilly.com.
 
 ## __Input data__
-As mentioned above, surfaltR is able to process two different forms of inputs: transcript IDs and amino acid sequences. This enables surfaltR to process novel transcripts in addition to transcripts already documented on Ensembl and annotated by APPRIS. 
+As mentioned above, surfaltr is able to process two different forms of inputs: transcript IDs and amino acid sequences. This enables surfaltr to process novel transcripts in addition to transcripts already documented on Ensembl and annotated by APPRIS. 
 
 <a id="Obtaining_and_Formatting_Input_Data"></a>
 
 ## __Obtaining and Formatting Input Data__
-Input to the surfaltR package must be formatted as a comma separated text file either 1) containing transcript ID’s and corresponding gene names or 2) containing amino acid sequences for novel isoforms with unique identifiers and corresponding gene names. For files containing only transcript IDs and gene names, column names should be titled “gene_name” and “transcript”. For files containing amino acid sequences, columns should be titled “external_gene_name”, “transcript_id”, and “protein_sequence”. The input transcripts and amino acid sequences can be derived from multiple upstream analysis procedures such as differential isoform expression analysis, long read sequencing for identification of novel isoforms, and others. 
+Input to the surfaltr package must be formatted as a comma separated text file either 1) containing transcript ID’s and corresponding gene names or 2) containing amino acid sequences for novel isoforms with unique identifiers and corresponding gene names. For files containing only transcript IDs and gene names, column names should be titled “gene_name” and “transcript”. For files containing amino acid sequences, columns should be titled “external_gene_name”, “transcript_id”, and “protein_sequence”. The input transcripts and amino acid sequences can be derived from multiple upstream analysis procedures such as differential isoform expression analysis, long read sequencing for identification of novel isoforms, and others. 
 
 #### __Why filter genes known to encode surface proteins?__
-While surfaltR can be used to plot topology of several proteins with the limit being set by the bulk processing power of TMHMM standalone software and Phobius web server, we recommend limiting input to isoforms of genes known to encode surface proteins. This can be done by using existing protein repositories and annotation systems such as Uniprot and Surfacegenie [@waas_surfacegenie_2020] to filter out isoforms that map to genes known not to encode surface proteins. This pre-processing step will ensure optimum performance of the package.
+While surfaltr can be used to plot topology of several proteins with the limit being set by the bulk processing power of TMHMM standalone software and Phobius web server, we recommend limiting input to isoforms of genes known to encode surface proteins. This can be done by using existing protein repositories and annotation systems such as Uniprot and Surfacegenie [@waas_surfacegenie_2020] to filter out isoforms that map to genes known not to encode surface proteins. This pre-processing step will ensure optimum performance of the package.
 
 <a id="exid"></a>
 
 #### __Gene name and transcript ID’s input (Input type 1)__
 The example input table containing data from Uhlén et al. [@uhlen_proteomics_2015] is shown 
 below with column names "gene_name" and "transcript". This matches the format
-required for surfaltR to be able to process ID-based input data.
+required for surfaltr to be able to process ID-based input data.
 
 ```{r, echo = FALSE}
 all_genome_data <- read.csv(file = "hpa_genes.csv", header = TRUE)
@@ -111,7 +111,7 @@ kable(head(all_genome_data), align = 'c')%>%
 #### __Gene name and amino acid sequence input (Input type 2)__
 The example input table containing data from Ray et al. [@ray_comprehensive_2020] is shown 
 below with column names "external_gene_name", "transcript_id", and "protein_sequence".
-This matches the format required for surfaltR to be able to process amino acid
+This matches the format required for surfaltr to be able to process amino acid
 sequence-based input data.
 
 ```{r, echo = FALSE}
@@ -125,7 +125,7 @@ kable(head(all_genome_data), align = 'c')%>%
 ```
 
 ## __About the example datasets__
-The example datasets have been derived from two different sources and saved in the data/ folder within the package installation and in the data/ folder on the SurfaltR package.
+The example datasets have been derived from two different sources and saved in the data/ folder within the package installation and in the data/ folder on the surfaltr package.
 
 1.  For the transcript ID input, we have included 10 unique transcripts from 7 different genes annotated as alternative by APPRIS. These genes were derived from supplementary data 12 from Uhlén et al. [@uhlen_proteomics_2015]. This data has been formatted to be compatible with the package as described [above](#exid).
 2.  For the amino acid input, we have utilized the supplementary data 1 from Ray et al. [@ray_comprehensive_2020]. This data includes novel isoforms expressed in mouse retina identified by long read sequencing and further validated by cell surface proteomics approaches. The data has been formatted to be compatible with the package as described [above](#exaa).
@@ -202,7 +202,7 @@ knitr::include_graphics("CRB1_fasta_ss.PNG")
 ```
 
 ## __Determine TM topology__ 
-Once an appropriate FASTA file is generated containing the amino acid sequences for each transcript, surfaltR can rapidly predict TM topology using the functions described below. The TM topology of surface proteins is very challenging to study by wet-lab experiments and thus several prediction algorithms described in detail in Punta et al. [@punta_membrane_2007] have been developed to predict TM topology. Using the Uniprot database as a reference [@noauthor_sam_nodate], we have chosen to include two different TM domain prediction tools in our package: TMHMM [@krogh_predicting_2001] and Phobius [@kall_combined_2004]. 
+Once an appropriate FASTA file is generated containing the amino acid sequences for each transcript, surfaltr can rapidly predict TM topology using the functions described below. The TM topology of surface proteins is very challenging to study by wet-lab experiments and thus several prediction algorithms described in detail in Punta et al. [@punta_membrane_2007] have been developed to predict TM topology. Using the Uniprot database as a reference [@noauthor_sam_nodate], we have chosen to include two different TM domain prediction tools in our package: TMHMM [@krogh_predicting_2001] and Phobius [@kall_combined_2004]. 
 
 An example output plot generated from TMHMM versus Phobius applied
 to the Ray et al. [@ray_comprehensive_2020] dataset is shown below:
@@ -215,7 +215,7 @@ Figure 2: Resultant Isoform Plot from TMHMM and Phobius TM Topology Prediction A
 
 </center>
 #### __Using TMHMM__
-In order predict TM topology using TMHMM 2.0 [@krogh_predicting_2001], surfaltR includes a function called get_tmhmm(). This function uses the AA.fasta file generated as the output of the get_pairs() function and the full path to the folder containing the TMHMM 2.0 software as input (fasta_file_name). The path to TMHMM 2.0 should be provided as a string and end in "TMHMM2.0c". For the fasta file input parameter, the input should be provided as a string that just includes the file name of the fasta file to be used without a path. The function will return a data frame (output as path to/working directory/mem_topo_tmhmm.csv) with the TMHMM-predicted location for each amino acid in all the protein sequences. The topology is expressed as i- inside the plasma membrane, M- TM, o- outside the plasma membrane and O – unknown/assumed to be outside.
+In order predict TM topology using TMHMM 2.0 [@krogh_predicting_2001], surfaltr includes a function called get_tmhmm(). This function uses the AA.fasta file generated as the output of the get_pairs() function and the full path to the folder containing the TMHMM 2.0 software as input (fasta_file_name). The path to TMHMM 2.0 should be provided as a string and end in "TMHMM2.0c". For the fasta file input parameter, the input should be provided as a string that just includes the file name of the fasta file to be used without a path. The function will return a data frame (output as path to/working directory/mem_topo_tmhmm.csv) with the TMHMM-predicted location for each amino acid in all the protein sequences. The topology is expressed as i- inside the plasma membrane, M- TM, o- outside the plasma membrane and O – unknown/assumed to be outside.
 
 To run get_tmhmm alone, the following code can be used:
 ```{r, eval = FALSE}
@@ -237,7 +237,7 @@ mem_topo <- get_tmhmm("AA.fasta", tmhmm_folder_name = "~/TMHMM2.0c")
 If the transcripts being run are not public information or should be kept private, the TMHMM standalone software along with the tmhmm R package provides an avenue to evaluate TM topology without using an external server, making it the ideal TM prediction algorithm in this instance. However, TMHMM is not able to predict the presence of signal peptides, possibly resulting in inaccuracies in TM prediction at the beginning of the sequence. Additionally, if a protein has no TM domains, TMHMM automatically flags the protein as extracellular, which is not always true and should be either verified experimentally or verified by comparison to the prediction by Phobius.
 
 #### __Using Phobius__
-In order predict TM topology using Phobius, surfaltR includes a function called run_phobius(). This function takes in the AA.fasta file generated as the output of the get_pairs() function (fasta_file_name). Additionally, this function is reliant on the data frame returned by the get_pairs() function as an input parameter (AA_seq). The function will return a data frame (output as path to/working directory/mem_topo_phobius.csv) with the Phobius-predicted location for each amino acid in all the protein sequences. The topology is expressed as i- inside the plasma membrane, M- TM, o- outside the plasma membrane and s – signal peptide.
+In order predict TM topology using Phobius, surfaltr includes a function called run_phobius(). This function takes in the AA.fasta file generated as the output of the get_pairs() function (fasta_file_name). Additionally, this function is reliant on the data frame returned by the get_pairs() function as an input parameter (AA_seq). The function will return a data frame (output as path to/working directory/mem_topo_phobius.csv) with the Phobius-predicted location for each amino acid in all the protein sequences. The topology is expressed as i- inside the plasma membrane, M- TM, o- outside the plasma membrane and s – signal peptide.
 
 To run run_phobius alone, the following code can be used:
 ```{r, eval = FALSE}
@@ -268,7 +268,7 @@ than Phobius's. Thus, evaluating membrane topology using both methods is an effe
 way to decide which TM regions are most likely to be present experimentally. 
 
 ## __Ranking and Plotting of Isoform Pairs__
-To easily visualize the differences that may exist between isoform pairs, surfaltR includes options to easily filter by the most significantly different isoforms and view the differences in TM topology between isoforms. This is accomplished by a single function: plot_isoforms().It produces a TM topology plot of all paired isoforms ranked by either length, TM, or a combination metric calculated using both factors. In order to use plot_isoforms(), several inputs need to be provided. These include the data frame returned by the get_phobius() or get_tmhmm() function (AA_seq), the data_frame returned by the get_pairs() function (topo), method of ranking (rank), number of genes to be displayed (n_prts), size of text labels (size_txt), and amount of space left of the plot for transcript labels (space_left). More detail on these inputs can be found [above](#ti) and in the help page for this function.
+To easily visualize the differences that may exist between isoform pairs, surfaltr includes options to easily filter by the most significantly different isoforms and view the differences in TM topology between isoforms. This is accomplished by a single function: plot_isoforms().It produces a TM topology plot of all paired isoforms ranked by either length, TM, or a combination metric calculated using both factors. In order to use plot_isoforms(), several inputs need to be provided. These include the data frame returned by the get_phobius() or get_tmhmm() function (AA_seq), the data_frame returned by the get_pairs() function (topo), method of ranking (rank), number of genes to be displayed (n_prts), size of text labels (size_txt), and amount of space left of the plot for transcript labels (space_left). More detail on these inputs can be found [above](#ti) and in the help page for this function.
 
 To plot isoform pairs, the following code can be used:
 ```{r, eval = FALSE}
@@ -281,7 +281,7 @@ plot_isoforms(topo = mem_topo, AA_seq = AA_lst, rank = "combo", n_prts = 15,
 The output plot will automatically be saved as a pdf within the “output” folder within the working directory. 
 
 #### __Ranking criteria__ 
-To determine which alternatively spliced/mis-spliced isoforms are significantly different from the principal isoforms, surfaltR provides users the option to sort or rank isoform pairs by three different criteria: length, difference in number of TM domains, and a combination metric that takes both length and TM difference into account. The ranking equations are described below:
+To determine which alternatively spliced/mis-spliced isoforms are significantly different from the principal isoforms, surfaltr provides users the option to sort or rank isoform pairs by three different criteria: length, difference in number of TM domains, and a combination metric that takes both length and TM difference into account. The ranking equations are described below:
 
 ##### __Ranked by Length__
 _Length Difference = |Prnc Length - Alt Length|_
@@ -344,15 +344,15 @@ Figure 4: Color Categorization for Membrane Topology and Principal Versus Altern
 </center>
 Although the plots provide an accurate prediction of TM topology for principal and alternative isoforms, there are a few caveats to keep in mind when interpreting the plots. Firstly, on plots created using Phobius’s model, any isoforms that have no TM region and no signal peptide will always be classified as intracellular. Due to the difficulty associated with predicting non-surface protein localization _in silico_, it is hard to tell if these isoforms are actually intracellular. Thus, these isoforms should not be regarded as intracellular but rather as unknowns. Similarly, on plots created using TMHMM’s model, any isoforms lacking TM regions will be classified as extracellular. Again, it is very difficult to tell computationally if this protein is extracellular and as such, isoforms categorized as fully extracellular should also be regarded as unknowns unless there is experimental information on isoforms from this gene being secreted. 
 
-_Note: The isoforms pairs seen in the plots produced by surfaltR are not aligned. Therefore, the first amino acid seen in the alternative isoform of one pair may not necessarily correspond to the first amino acid in the principal isoform. In order to facilitate sequence alignment, surfaltR also includes [functions](#MSA) that perform multiple sequence alignment of isoform pairs. When used in combination, this can help with the interpretation of isoform pair plots._
+_Note: The isoforms pairs seen in the plots produced by surfaltr are not aligned. Therefore, the first amino acid seen in the alternative isoform of one pair may not necessarily correspond to the first amino acid in the principal isoform. In order to facilitate sequence alignment, surfaltr also includes [functions](#MSA) that perform multiple sequence alignment of isoform pairs. When used in combination, this can help with the interpretation of isoform pair plots._
 
 <a id="MSA"></a>
 
 ## __Multiple Sequence Alignment for Genes of Interest__
-To enable users to take a closer look at genes of interest from the isoform pair plot, surfaltR also offers users the ability to align amino acid sequences from isoform pairs to easily visualize differences in sequences that may contribute to differences in topology. This functionality can be applied for isoform pairs of interest from a single organism through the function align_prts(). If the user wants to align isoform pairs from multiple organisms, surfaltR also offers a function to facilitate this through align_org_prts() given that the paralog from the other organism was provided as input.
+To enable users to take a closer look at genes of interest from the isoform pair plot, surfaltr also offers users the ability to align amino acid sequences from isoform pairs to easily visualize differences in sequences that may contribute to differences in topology. This functionality can be applied for isoform pairs of interest from a single organism through the function align_prts(). If the user wants to align isoform pairs from multiple organisms, surfaltr also offers a function to facilitate this through align_org_prts() given that the paralog from the other organism was provided as input.
 
 #### __From Isoform Pairs from a Single Organism__
-After identifying genes of interest from an isoform pairs plot, surfaltR offers users an easy way to align amino acid sequences from the same gene through the align_prts() function. Input variables include a vector containing
+After identifying genes of interest from an isoform pairs plot, surfaltr offers users an easy way to align amino acid sequences from the same gene through the align_prts() function. Input variables include a vector containing
 the genes of interest (gene_names), a string containing the path to the file containing the data to be used (data_fie), a boolean stating if the data cotnains amino acids (if_aa), and a string stating which organism the data is from (organism).
 
 The code used to run the align_prts function is shown below:
@@ -364,7 +364,7 @@ align_prts(gene_names = c("Crb1", "Adgrl1"), data_file = "~/CRB1.csv",
 This function will produce PDF files containing the aligned sequences and FASTA files containing the sequences and transcript IDs for each gene, which will be saved to the working directory. 
 
 #### __From Isoform Pairs from Multiple Organisms__
-In addition to single organism alignment, surfaltR also provides users an easy way to align amino acid sequences from the same gene from multiple organisms through the align_org_prts() function. To use align_prts(), the user needs to provide the names of the genes they are interested in examining from both organisms (gene_names), the path to the file cotnaining the human data (hs_data_file), the path to the file containing the mouse data (ms_data_file), and a boolean stating if the data contains amino acid sequences (if_aa).
+In addition to single organism alignment, surfaltr also provides users an easy way to align amino acid sequences from the same gene from multiple organisms through the align_org_prts() function. To use align_prts(), the user needs to provide the names of the genes they are interested in examining from both organisms (gene_names), the path to the file cotnaining the human data (hs_data_file), the path to the file containing the mouse data (ms_data_file), and a boolean stating if the data contains amino acid sequences (if_aa).
 
 The code used to run the align_org_prts function is shown below:
 ```{r, eval = FALSE}
@@ -385,13 +385,13 @@ knitr::include_graphics("Figure_5.png")
 Figure 5: Multiple Sequence Alignment of CD8B Isoforms Compared to Isoforms Plot Output
 
 </center>
-## __Checking surfaltR Installation and Functionality__
-In order to validate the functionality of surfaltR, we have included the test_surfaltr function. This function has no input parameters, and can be called using the code below:
+## __Checking surfaltr Installation and Functionality__
+In order to validate the functionality of surfaltr, we have included the test_surfaltr function. This function has no input parameters, and can be called using the code below:
 ```{r, eval = FALSE}
 test_surfaltr()
 ```
 
-If surfaltR is installed correctly, the function should print a message stating "The test was successful. SurfaltR works as expected!". If not, the function will print errors explaining what may be incorrect. This includes stating if any dependencies have not been installed, if surfaltR’s installation failed, if THMHMM is installed incorrectly, or if the working directory cannot be written to. 
+If surfaltr is installed correctly, the function should print a message stating "The test was successful. surfaltr works as expected!". If not, the function will print errors explaining what may be incorrect. This includes stating if any dependencies have not been installed, if surfaltr’s installation failed, if THMHMM is installed incorrectly, or if the working directory cannot be written to. 
 
 ```{r, eval = FALSE}
 library(surfaltr)
