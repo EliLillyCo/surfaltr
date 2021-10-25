@@ -12,4 +12,7 @@
 # Changes in version 0.99.4 (2021-10-12)
 
 # Changes in version 0.99.5 (2021-10-21)
-* Fixed text for consistency of package name
+* Fixed text for consistency in package name
+
+# Changes in version 0.99.6 (2021-10-25)
+* Fixed text for consistency in package name

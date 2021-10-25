@@ -2,7 +2,7 @@ Package: surfaltr
 Type: Package
 Title: Rapid Comparison of Surface Protein Isoform Membrane Topologies
         Through surfaltr
-Version: 0.99.5
+Version: 0.99.6
 Authors@R: 
       c(person(given = "Pooja",
            family = "Gangras",
@@ -23,7 +23,7 @@ Description: Cell surface proteins form a major fraction of the druggable proteo
   topologies. To address this gap, we have developed an R package, surfaltr. It pairs 
   inputted isoforms, either known alternatively spliced or novel, with their APPRIS 
   annotated principal counterparts, predicts their TM topologies using TMHMM or Phobius, 
-  and generates a customizable graphical output. Further, surfaltR facilitates the 
+  and generates a customizable graphical output. Further, surfaltr facilitates the 
   prioritization of biologically diverse isoform pairs through the incorporation 
   of three different ranking metrics and through protein alignment functions. Citations for programs mentioned here can be found in the vignette.
 License: MIT + file LICENSE
