@@ -2,7 +2,7 @@
 Surface proteins are hydrophobic and remain difficult to study thereby necessitating the use of TM topology prediction methods such as TMHMM (1) and Phobius (2). However, there exists a need for bioinformatic approaches to streamline batch processing of isoforms for comparing and visualizing topologies. To address this gap, we have developed an R package, surfaltr. It pairs inputted isoforms, either known alternatively spliced or novel, with their APPRIS (3) annotated principal counterparts, predicts their TM topologies using TMHMM or Phobius, and generates a customizable graphical output. Further, surfaltr facilitates the prioritization of biologically diverse isoform pairs through the incorporation of three different ranking metrics and through protein alignment functions.
 
 # Note: 
-If you use surfaltr in published research, please cite Bioconductor page (10.18129/B9.bioc.surfaltr) and possibly a subsequent publication (will be updated later).
+If you use surfaltr in published research, please cite Bioconductor page (https://bioconductor.org/packages/release/bioc/html/surfaltr.html) and possibly a subsequent publication (will be updated later).
  
 # Installation: 
 Please install using Bioconductor as described on the landing page: 10.18129/B9.bioc.surfaltr.
