@@ -5,7 +5,7 @@ Surface proteins are hydrophobic and remain difficult to study thereby necessita
 If you use surfaltr in published research, please cite Bioconductor page (https://bioconductor.org/packages/release/bioc/html/surfaltr.html) and possibly a subsequent publication (will be updated later).
  
 # Installation: 
-Please install using Bioconductor as described on the landing page: 10.18129/B9.bioc.surfaltr.
+Please install using Bioconductor as described on the landing page: (https://bioconductor.org/packages/release/bioc/html/surfaltr.html).
   
 # TMHMM standalone software Installation
 In order to be able to use TMHMM R package within surfaltr to predict membrane topology, it is important to first ensure that you have TMHMM 2.0 standalone software installed on your computer. To do this, simply navigate to https://services.healthtech.dtu.dk/service.php?TMHMM-2.0, and follow directions for installation of standalone software. In order to install TMHMM 2.0 in your R environment, you will also need the package “tmhmm”. The package should automatically install when you download the surfaltR package. In the event that this does not happen, you can use the following installation code:
