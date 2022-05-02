@@ -2,34 +2,12 @@
 Surface proteins are hydrophobic and remain difficult to study thereby necessitating the use of TM topology prediction methods such as TMHMM (1) and Phobius (2). However, there exists a need for bioinformatic approaches to streamline batch processing of isoforms for comparing and visualizing topologies. To address this gap, we have developed an R package, SurfaltR. It pairs inputted isoforms, either known alternatively spliced or novel, with their APPRIS (3) annotated principal counterparts, predicts their TM topologies using TMHMM or Phobius, and generates a customizable graphical output. Further, SurfaltR facilitates the prioritization of biologically diverse isoform pairs through the incorporation of three different ranking metrics and through protein alignment functions.
 
 # Note: 
-If you use surfaltR in published research, please cite this page and possibly a subsequent publication (will be updated later).
+If you use surfaltr in published research, please cite this page and possibly a subsequent publication (will be updated later).
  
 # Installation: 
-As surfaltR is hosted on Github, the devtools package is needed to successfully install surfaltR. To install and load devtools, the following code can be used:
- 
-install.packages("devtools")
-library(devtools)
-Once remotes is installed, surfaltR can be installed using the following code:
-
-devtools::install_github("EliLillyCo/surfaltR")
-To load surfaltR, the following code can be used:
-
-library(surfaltr)
- 
-The github repository for surfaltR containing all information related to the package can be found at https://github.com/EliLillyCo/surfaltR.
+As surfaltr is hosted on Bioconductor, please follow installation instructions outlined here: https://bioconductor.org/packages/release/bioc/html/surfaltr.html 
   
-# TMHMM standalone software Installation
-In order to be able to use TMHMM R package within surfaltR to predict membrane topology, it is important to first ensure that you have TMHMM 2.0 standalone software installed on your computer. To do this, simply navigate to https://services.healthtech.dtu.dk/service.php?TMHMM-2.0, and follow directions for installation of standalone software. In order to install TMHMM 2.0 in your R environment, you will also need the package “tmhmm”. The package should automatically install when you download the surfaltR package. In the event that this does not happen, you can use the following installation code:
-install.packages(“tmhmm”)
-Once you have obtained your link to install TMHMM 2.0 and successfully loaded the “tmhmm” package, you will need to use the following code to make TMHMM operable within your R development environment:
-library(“tmhmm”)
-install_tmhmm("https://services.healthtech.dtu.dk/download/28c408dc-ef5e-47ad-a284-66754bcd27f7")
-In the code above, be sure to replace the URL shown in the quotation marks with the URL emailed to you after requesting the TMHMM 2.0 download. 
-
-# Phobius Installation
-As run_phobius() relies on the Phobius API, a copy of the software does not need to be downloaded on the user’s device. 
-  
-# Please refer to the vignette for detailed descriptions of workflow and functions.
+# Please refer to the vignette for detailed descriptions of installation, workflow, functions and troubleshooting.
 
 
 # References
