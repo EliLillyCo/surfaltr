@@ -8,3 +8,14 @@
 
 # Changes in version 0.99.3 (2021-10-11)
 * Fixed .gitignore file to fix build error
+
+# Changes in version 0.99.4 (2021-10-12)
+
+# Changes in version 0.99.5 (2021-10-21)
+* Fixed text for consistency in package name
+
+# Changes in version 0.99.6 (2021-10-25)
+* Fixed text for consistency in package name
+
+# Changes in version 1.1.0 (2021-04-27)
+* Clarified vignette text and added troubleshooting tips

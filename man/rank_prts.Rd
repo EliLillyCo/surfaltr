@@ -10,7 +10,7 @@ rank_prts(counts, rank, n_prts)
 \item{counts}{A data frame containing the overall length and individual lengths of
 each section of the surface protein corresponding to a certain transcript.}
 
-\item{rank}{String indicating which method to use to rank proteins in graphicl
+\item{rank}{String indicating which method to use to rank proteins in graphic
 output. Options include "Length", "TM", and "Combo".}
 
 \item{n_prts}{Integer value indicating the number of genes that should be

@@ -2,7 +2,7 @@
 % Please edit documentation in R/test_surfaltr.R
 \name{test_surfaltr}
 \alias{test_surfaltr}
-\title{Test the functionality of SurfaltR}
+\title{Test the functionality of surfaltr}
 \usage{
 test_surfaltr()
 }
@@ -10,7 +10,7 @@ test_surfaltr()
 Nothing is returned.
 }
 \description{
-This function runs all of SurfaltR's other functions on the CRB1 data set
+This function runs all of surfaltr's other functions on the CRB1 data set
 to ensure that the function output matches the expected output. An incorrect
 output or error indicates that something went wrong in installation.
 }

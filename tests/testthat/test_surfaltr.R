@@ -1,6 +1,6 @@
-#' Test the functionality of SurfaltR
+#' Test the functionality of surfaltr
 #'
-#' This function runs all of SurfaltR's other functions on the CRB1 data set
+#' This function runs all of surfaltr's other functions on the CRB1 data set
 #' to ensure that the function output matches the expected output. An incorrect
 #' output or error indicates that something went wrong in installation.
 #'
