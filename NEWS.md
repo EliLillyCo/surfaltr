@@ -17,5 +17,5 @@
 # Changes in version 0.99.6 (2021-10-25)
 * Fixed text for consistency in package name
 
-# Changes in version 1.1.0 (2021-04-27)
+# Changes in version 1.2.1 (2021-04-27)
 * Clarified vignette text and added troubleshooting tips
