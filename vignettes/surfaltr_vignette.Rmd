@@ -39,21 +39,57 @@ Cell surface proteins are of great biomedical relevance, serving as cell type di
 
 ## __Installation__ 
 #### __surfaltr Installation__
-surfaltr is freely available for download via Github. To install and load surfaltr, the following code can be used:
+surfaltr is freely available for download via Bioconductor. surfaltr has some dependencies which should all be installed/imported automatically when the code shown below is run to install surfaltr:
 ```{r, eval = FALSE}
-devtools::install_github("EliLillyCo/surfaltr")
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("surfaltr")
 ```
 To load surfaltr, the following code can be used:
 ```{r, eval = FALSE}
 library(surfaltr)
 ```
 
+The dependencies of the package that are automatically imported include:
+dplyr (>= 1.0.6), biomaRt(>= 2.46.0), protr (>= 1.6-2), seqinr (>= 4.2-5), ggplot2 (>= 3.3.2), utils (>= 2.10.1), stringr (>= 1.4.0), Biostrings(>= 2.58.0), readr (>= 1.4.0), httr (>= 1.4.2), testthat (>= 3.0.0), xml2 (>= 1.3.2), msa(>= 1.22.0), methods (>= 4.0.3)
 
-#### __TMHMM Standalone Software Installation__
-In order to be able to use TMHMM R package [@krogh_predicting_2001] within surfaltr to predict membrane topology, it is important to first ensure that you have TMHMM 2.0 standalone software installed on your computer. To do this, simply navigate to https://services.healthtech.dtu.dk/service.php?TMHMM-2.0, and follow directions for installation of standalone software. Make sure to record the path to which TMHMM 2.0 is installed, as this information will be needed in order to run TMHMM in future functions.
+The dependency of the package which is NOT automatically imported:
+TMHMM standalone software 
+
+surfaltr predicts TM domains either using TMHMM standalone software OR using the Phobius API. If the user intends to use the TMHMM fuctionality of surfaltr then they must install the TMHMM standalone software (details below).
+
+#### __When to Use Phobius or TMHMM__
+In terms of prediction specificity, Phobius’s ability to detect signal peptides contributes to a greater amount of detail than TMHMM. Additionally, as all sequences are run using an API as opposed to local software, the run time for Phobius is also slightly lower. However, if a protein has no TM domains and no signal peptide, Phobius automatically flags the protein as internal, which is not always true and should be verified experimentally before drawing any conclusions. If sequences are considered private information and should not be posted externally, we recommend using TMHMM to ensure everything is run locally.
 
 #### __Phobius Installation__
-As run_phobius() relies on the Phobius API, a copy of the software does not need to be downloaded on the user’s device and will isntead automatically be called by the surfaltr functions.
+As run_phobius() relies on the Phobius API, a copy of the software does not need to be downloaded on the user’s device and will instead automatically be called by the surfaltr functions.
+
+#### __TMHMM Standalone Software Installation__
+In order to be able to use TMHMM [@krogh_predicting_2001] within surfaltr to predict membrane topology, it is important to first ensure that you have TMHMM 2.0 standalone software installed on your computer. To do this,\
+1. Navigate to https://services.healthtech.dtu.dk/service.php?TMHMM-2.0 \ 
+2. follow directions for installation of Linux version of standalone software (tmhmm-2.0c.Linux.tar.gz).\
+3. Untar the tmhmm-2.0c.Linux.tar.gz file.\
+4. Extract it to a place where you store software.\
+5. Insert the correct path for perl 5.x in the first line of the scripts bin/tmhmm and bin/tmhmmformat.pl (if not /usr/local/bin/perl or #!/usr/bin/env perl). Use which perl and 6. perl -v in the terminal to help find the correct path.\
+6. Make sure you have an executable version of decodeanhmm in the bin directory.\
+7. Make sure to record the path to which TMHMM 2.0 is installed, as this information will be needed in order to run TMHMM in future functions.\
+TMHMM license and thus the TMHMM 2.0 standalone software is freely available to all academic institutions upon request from the official website linked above.
+
+#### __Troubleshooting TMHMM Installation__
+If the TMHMM standlone software is NOT installed in the correct path or folder you will receive error messages when running surfaltr functions. In this scenario please check the directory in which TMHMM2.0c was downloaded and make sure that the directory structure is as such:
+path/to/folder/TMHMM2.0c/bin/decodeanhmm.linux 
+
+TMHMM may get downloaded with the following directory names and structure: path/to/folder/TMHMM2.0c/tmhmm-2.0c/decodeanhmm.Linux_x86_64
+Please fix the directory structure to be the one shown above to use TMHMM within surfaltr.
+OR
+run the following code:
+```{r, eval = FALSE}
+check_tmhmm_install(path/to/folder/TMHMM2.0c)
+```
+This function also prints a helpful method providing tips on how to fix the installation if TMHMM is not found at the folder path specified. If TMHMM installation is problematic for some reason we recommend only using the Phobius method within surfaltr to predict TM domains. 
+
+
 
 <a id="qs"></a>
 
@@ -70,11 +106,13 @@ Figure 1: Overall surfaltr workflow and functions.
 Now we describe the overall functions which will generate a plot of TM topologies for transcripts-of- interest paired with gene-matched annotated principal isoforms. To rapidly generate isoform pair plots, the functions graph_from_ids() or graph_from_aas() can be used. If you are using the graph_from_ids() function, input data should be formatted with only gene names and transcript IDs according to guidelines detailed in the [“Obtaining and Formatting Input Data Section”](#Obtaining_and_Formatting_Input_Data). If you are using the graph_from_aas() function, input data should be formatted with gene names, unique transcript identifiers, and amino acid sequences according to guidelines detailed in the [“Obtaining and Formatting Input Data Section”](#Obtaining_and_Formatting_Input_Data). Other input parameters are described in detail in the [“Rapid Plotting of Paired Isoforms”](#Rapid_Plotting_of_Paired_Isoforms) section below. 
 
 ```{r, eval=FALSE}
-graph_from_aas(data_file = "~/CRB1.csv", organism = "mouse", rank = "combo", 
+graph_from_aas(data_file = system.file("extdata", "CRB1.csv", package="surfaltr"), 
+               organism = "mouse", rank = "combo", 
                n_prts = 20, mode = "phobius", size_txt = 2, space_left = -400, 
                temp = FALSE)
 
-graph_from_ids(data_file = "~/hpa_genes.csv", organism = "human", 
+graph_from_ids(data_file = system.file("extdata", "hpa_genes.csv",package="surfaltr"),
+               organism = "human", 
                rank = "combo", n_prts = 20, mode = "phobius", size_txt = 2, 
                space_left = -400, temp = FALSE)
 ```
@@ -98,7 +136,7 @@ While surfaltr can be used to plot topology of several proteins with the limit b
 #### __Gene name and transcript ID’s input (Input type 1)__
 The example input table containing data from Uhlén et al. [@uhlen_proteomics_2015] is shown 
 below with column names "gene_name" and "transcript". This matches the format
-required for surfaltr to be able to process ID-based input data.
+required for surfaltr to be able to process ID-based input data. This exmaple dataset is provided along with the package for the user and can be loaded 
 
 ```{r, echo = FALSE}
 all_genome_data <- read.csv(file = "hpa_genes.csv", header = TRUE)
@@ -153,7 +191,7 @@ An example of the code required to run this function applied to the Uhlén et al
 <a id="ti"></a>
 
 ```{r,  eval=FALSE}
-graph_from_ids(data_file = "~/hpa_genes.csv", organism = "human", 
+graph_from_ids(data_file = system.file("extdata", "hpa_genes.csv",package="surfaltr"), organism = "human", 
                rank = "combo", n_prts = 20, mode = "phobius", size_txt = 2, 
                space_left = -400, tmhmm_folder_name = NULL)
 ```
@@ -165,8 +203,8 @@ When a .csv file containing [gene names and amino acid sequences is provided](#e
 
 An example of the code required to run this function applied to the Ray et al. [@ray_comprehensive_2020] data is shown below:
 ```{r, eval=FALSE}
-graph_from_aas(data_file = "~/CRB1.csv", organism = "mouse", rank = "TM", 
-               n_prts = 10, mode = "tmhmm", size_txt = 2, space_left = -400, 
+graph_from_aas(data_file = system.file("extdata", "CRB1.csv", package="surfaltr"), organism = "mouse", rank = "TM", 
+               n_prts = 10, mode = "phobius", size_txt = 2, space_left = -400, 
                tmhmm_folder_name = NULL)
 
 ```
@@ -178,7 +216,7 @@ The output of the function contains two separate components: 1) a data frame con
 An example of the code required to run this function applied to the Ray et al. [@ray_comprehensive_2020] data is shown below:
 
 ```{r, eval = FALSE}
-AA_seq <- get_pairs(data_file = "~/CRB1.csv", if_aa = TRUE, organism = "mouse", temp = FALSE)
+AA_seq <- get_pairs(data_file = system.file("extdata", "CRB1.csv", package="surfaltr"), if_aa = TRUE, organism = "mouse", temp = FALSE)
 
 ```
 
@@ -219,7 +257,7 @@ In order predict TM topology using TMHMM 2.0 [@krogh_predicting_2001], surfaltr 
 
 To run get_tmhmm alone, the following code can be used:
 ```{r, eval = FALSE}
-mem_topo <- get_tmhmm(fasta_file_name = "AA.fasta", tmhmm_folder_name = "~/TMHMM2.0c")
+mem_topo <- get_tmhmm(fasta_file_name = "AA.fasta", tmhmm_folder_name = "~/path/to/TMHMM2.0c")
 ```
 
 It's important to note that in order for this function to run, there needs to 
@@ -229,8 +267,8 @@ before the get_tmhmm() function, this folder and file will be created automatica
 The code below can be used to automate the fasta file generation and membrane
 topology prediction process:
 ```{r, eval = FALSE}
-AA_lst <- get_pairs(data_file = "~/CRB1.csv", if_aa = TRUE, organism = "mouse")
-mem_topo <- get_tmhmm("AA.fasta", tmhmm_folder_name = "~/TMHMM2.0c")
+AA_lst <- get_pairs(data_file = system.file("extdata", "CRB1.csv", package="surfaltr"), if_aa = TRUE, organism = "mouse")
+mem_topo <- get_tmhmm("AA.fasta", tmhmm_folder_name = "~/path/to/TMHMM2.0c")
 ```
 
 #### __When to Use TMHMM__
@@ -241,18 +279,15 @@ In order predict TM topology using Phobius, surfaltr includes a function called 
 
 To run run_phobius alone, the following code can be used:
 ```{r, eval = FALSE}
-topo <- run_phobius(AA_seq = AA_lst, fasta_file_name = "~/<your-wd>/output/AA.fasta")
+topo <- run_phobius(AA_seq = AA_lst, fasta_file_name = "~/<your-workin-directory>/output/AA.fasta")
 ```
 
 To automatically generate the FASTA file used by the function, the following 
 code can be used:
 ```{r, eval = FALSE}
 AA_lst <- get_pairs(data_file = "~/CRB1.csv", if_aa = TRUE, organism = "mouse")
-mem_topo <- run_phobius(AA_seq = AA_lst, fasta_file_name = "~/<your-wd>/output/AA.fasta")
+mem_topo <- run_phobius(AA_seq = AA_lst, fasta_file_name = "~/<your-workin-directory>/output/AA.fasta")
 ```
-
-#### __When to Use Phobius__
-In terms of prediction specificity, Phobius’s ability to detect signal peptides contributes to a greater amount of detail than TMHMM. Additionally, as all sequences are run using an API as opposed to local software, the run time for Phobius is also slightly lower. However, if a protein has no TM domains and no signal peptide, Phobius automatically flags the protein as internal, which is not always true and should be verified experimentally before drawing any conclusions. If sequences are considered private information and should not be posted externally, we recommend using TMHMM to ensure everything is run locally. 
 
 #### __Interpreting Results from Both Phobius and TMHMM__
 The usage of TM predictions from both TMHMM and Phobius serves as a powerful tool
@@ -272,8 +307,8 @@ To easily visualize the differences that may exist between isoform pairs, surfal
 
 To plot isoform pairs, the following code can be used:
 ```{r, eval = FALSE}
-AA_lst <- get_pairs(data_file = "~/CRB1.csv", if_aa = TRUE, organism = "mouse")
-mem_topo <- run_phobius(AA_seq = AA_lst, fasta_file_name = "~/AA.fasta")
+AA_lst <- get_pairs(data_file = system.file("extdata", "CRB1.csv", package="surfaltr"), if_aa = TRUE, organism = "mouse")
+mem_topo <- run_phobius(AA_seq = AA_lst, fasta_file_name = "~/<your-working-directory>/AA.fasta")
 plot_isoforms(topo = mem_topo, AA_seq = AA_lst, rank = "combo", n_prts = 15, 
               size_txt = 3, space_left = -400)
 ```
@@ -357,19 +392,21 @@ the genes of interest (gene_names), a string containing the path to the file con
 
 The code used to run the align_prts function is shown below:
 ```{r, eval = FALSE}
-align_prts(gene_names = c("Crb1", "Adgrl1"), data_file = "~/CRB1.csv", 
+align_prts(gene_names = c("Crb1", "Adgrl1"), data_file = system.file("extdata", "CRB1.csv", package="surfaltr"), 
            if_aa = TRUE, organism = "mouse")
 ```
 
-This function will produce PDF files containing the aligned sequences and FASTA files containing the sequences and transcript IDs for each gene, which will be saved to the working directory. 
+This function will produce PDF files containing the aligned sequences and FASTA files containing the sequences and transcript IDs for each gene, which will be saved to a folder named 'output' in your working directory.
+
+Troubleshooting tips: This function of sufaltr depends on the msa R package which requires LaTeX. Any errors in msa installation pertaining to LaTeX usage and pdf generation can throw errors. If users run into problems please check msa R package isnatllation.
 
 #### __From Isoform Pairs from Multiple Organisms__
 In addition to single organism alignment, surfaltr also provides users an easy way to align amino acid sequences from the same gene from multiple organisms through the align_org_prts() function. To use align_prts(), the user needs to provide the names of the genes they are interested in examining from both organisms (gene_names), the path to the file cotnaining the human data (hs_data_file), the path to the file containing the mouse data (ms_data_file), and a boolean stating if the data contains amino acid sequences (if_aa).
 
 The code used to run the align_org_prts function is shown below:
 ```{r, eval = FALSE}
-align_org_prts(gene_names = c("IGSF1", "TAPBP"), hs_data_file = "~/hpa_genes.csv", 
-               mm_data_file =  "~/hpa_mouse_genes.csv", if_aa = FALSE)
+align_org_prts(gene_names = c("gene-name"), hs_data_file = "~/path/to/human-dataframe.csv", 
+               mm_data_file =  "~/path/to/mouse-dataframe.csv", if_aa = FALSE)
 ```
 
 This function will produce PDF files containing the aligned sequences and FASTA files containing the sequences and transcript IDs for each gene, which will be saved to the working directory. 
@@ -385,13 +422,6 @@ knitr::include_graphics("Figure_5.png")
 Figure 5: Multiple Sequence Alignment of CD8B Isoforms Compared to Isoforms Plot Output
 
 </center>
-## __Checking surfaltr Installation and Functionality__
-In order to validate the functionality of surfaltr, we have included the test_surfaltr function. This function has no input parameters, and can be called using the code below:
-```{r, eval = FALSE}
-test_surfaltr()
-```
-
-If surfaltr is installed correctly, the function should print a message stating "The test was successful. surfaltr works as expected!". If not, the function will print errors explaining what may be incorrect. This includes stating if any dependencies have not been installed, if surfaltr’s installation failed, if THMHMM is installed incorrectly, or if the working directory cannot be written to. 
 
 ```{r, eval = FALSE}
 library(surfaltr)

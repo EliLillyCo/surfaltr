@@ -3,7 +3,7 @@
 #' This function retrieves the raw data from tmhmm containing information
 #' about the membrane location of each amino acid in a transcript.
 #' In order to set a standard path that allows tmhmm to run, the path
-#' is set to match that of the fasta file contining the amino acids.
+#' is set to match that of the fasta file containing the amino acids.
 #'
 #' @usage tmhmm_fix_path(fasta_filename, folder_name)
 #' @param fasta_filename Parameter containing input fasta file to be run on
@@ -17,17 +17,10 @@
 #' @importFrom testthat expect_equal
 #' @importFrom stringr str_remove
 
-tmhmm_fix_path <- function(fasta_filename, folder_name) {
-    bin_path <- normalizePath(file.path(folder_name, "tmhmm-2.0c", "bin", 
-                                        "decodeanhmm.Linux_x86_64"))
-    options_path <- file.path(
-        folder_name, "tmhmm-2.0c", "lib",
-        "TMHMM2.0.options"
-    )
-    model_path <- file.path(
-        folder_name, "tmhmm-2.0c", "lib",
-        "TMHMM2.0.model"
-    )
+tmhmm_fix_path <- function(fasta_filename, tmhmm_folder_name) {
+    bin_path <- normalizePath(file.path(tmhmm_folder_name, "bin", "decodeanhmm.linux"))
+    options_path <- file.path(tmhmm_folder_name, "lib","TMHMM2.0.options")
+    model_path <- file.path(tmhmm_folder_name, "lib","TMHMM2.0.model")
     cmds <- c("-f", options_path, "-modelfile", model_path)
     text <- NA
     suppressWarnings(text <- system2(

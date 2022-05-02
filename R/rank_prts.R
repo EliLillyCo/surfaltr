@@ -11,7 +11,7 @@
 #' @usage rank_prts(counts, rank, n_prts)
 #' @param counts A data frame containing the overall length and individual lengths of
 #' each section of the surface protein corresponding to a certain transcript.
-#' @param rank String indicating which method to use to rank proteins in graphicl
+#' @param rank String indicating which method to use to rank proteins in graphic
 #' output. Options include "Length", "TM", and "Combo".
 #' @param n_prts Integer value indicating the number of genes that should be
 #' displayed on the graphical output. Default value is 20.

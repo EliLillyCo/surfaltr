@@ -37,7 +37,9 @@ merge_trans <- function(princ, final_trans, if_aa) {
             final_pairs$uniprotsptrembl.y != "")
         if (nrow(final_pairs) == 0) {
             stop("Please make sure your organism is correct and your transcript 
-            IDs are valid and contain no decimal values before continuing.")
+            IDs are valid and contain no decimal values before continuing.If your 
+            IDs are correct and if you recieve this error again then the error is most 
+            likely due to Biomart servers being down. Please try again later.")
         }
     }
     if (if_aa == TRUE) {
@@ -45,7 +47,9 @@ merge_trans <- function(princ, final_trans, if_aa) {
             final_pairs$uniprot_isoform != "" | final_pairs$uniprotsptrembl != "")
         if (nrow(final_pairs) == 0) {
             stop("Please make sure your organism is correct and your transcript 
-            IDs are valid and contain no decimal values before continuing.")
+            IDs are valid and contain no decimal values before continuing.If your 
+            IDs are correct and if you recieve this error again then the error is most 
+            likely due to Biomart servers being down. Please try again later.")
         }
     }
     return(final_pairs)

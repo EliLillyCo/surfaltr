@@ -1,6 +1,6 @@
-#' Test the functionality of SurfaltR
+#' Test the functionality of surfaltr
 #'
-#' This function runs all of SurfaltR's other functions on the CRB1 data set
+#' This function runs all of surfaltr's other functions on the CRB1 data set
 #' to ensure that the function output matches the expected output. An incorrect
 #' output or error indicates that something went wrong in installation.
 #'
@@ -22,10 +22,10 @@ test_surfaltr <- function() {
                         TRUE, "mouse", TRUE)
     topo <- run_phobius(AA_seq, paste(getwd(), "/AA.fasta", sep = ""))
     counts <- process_tmhmm(topo, AA_seq)
-    final_test <- rank_prts(counts, "combo", 50)
+    final_test <- rank_prts(counts, "combo",20)
     test_equal <- dplyr::all_equal(final_ranks, final_test)
     if (test_equal == TRUE) {
-        print("The test was successful. SurfaltR works as expected!")
+        print("The test was successful. surfaltr works as expected!")
     } else {
         print("The test was unsuccessful. Please check your installation.")
     }
